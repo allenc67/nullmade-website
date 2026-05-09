@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "functions": {
+    "api/products.js": { "memory": 128, "maxDuration": 10 }
+  }
+}

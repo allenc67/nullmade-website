@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NULLMADE — DARK BY DEFAULT</title>
+<meta name="description" content="Dark anime, gaming, alt-culture graphic tees. Each design drops with a story.">
+<meta property="og:title" content="NULLMADE — DARK BY DEFAULT">
+<meta property="og:description" content="Dark anime, gaming, alt-culture graphic tees.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#080808">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Epilogue:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --bg:#080808;
+  --surface:#111111;
+  --surface2:#181818;
+  --border:#222222;
+  --gold:#f0a500;
+  --gold-dim:rgba(240,165,0,0.12);
+  --white:#ffffff;
+  --muted:#888888;
+  --dimmer:#444444;
+}
+
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:'Epilogue',sans-serif;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:60px;
+  background:rgba(8,8,8,0.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.nav-logo{
+  font-family:'Anton',sans-serif;
+  font-size:20px;
+  letter-spacing:3px;
+  color:var(--white);
+  text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;line-height:1;
+}
+.nav-logo .top{font-size:14px;letter-spacing:6px;}
+.nav-logo .line{width:100%;height:1px;background:var(--gold);margin:2px 0;}
+.nav-logo .bot{font-size:14px;letter-spacing:6px;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{
+  font-size:11px;letter-spacing:3px;color:var(--muted);
+  text-decoration:none;text-transform:uppercase;
+  transition:color 0.2s;font-weight:500;
+}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{
+  font-size:11px;letter-spacing:2px;color:var(--bg);
+  background:var(--white);border:none;cursor:pointer;
+  padding:8px 20px;text-transform:uppercase;font-family:'Epilogue',sans-serif;
+  font-weight:600;text-decoration:none;
+  transition:background 0.2s,color 0.2s;
+}
+.nav-cta:hover{background:var(--gold);color:var(--bg);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.nav-hamburger span{width:22px;height:1.5px;background:var(--white);display:block;transition:all 0.3s;}
+
+/* ── TICKER ── */
+.ticker{
+  position:fixed;top:60px;left:0;right:0;z-index:99;
+  background:var(--gold);height:28px;overflow:hidden;
+  display:flex;align-items:center;
+}
+.ticker-inner{
+  display:flex;align-items:center;gap:0;
+  animation:ticker 30s linear infinite;
+  white-space:nowrap;
+}
+.ticker-text{
+  font-size:10px;letter-spacing:3px;color:var(--bg);
+  font-weight:700;text-transform:uppercase;
+  padding:0 24px;
+}
+.ticker-dot{color:var(--bg);opacity:0.4;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;padding-top:88px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  text-align:center;padding-left:20px;padding-right:20px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(240,165,0,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 100%, rgba(240,165,0,0.04) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  font-size:10px;letter-spacing:5px;color:var(--muted);
+  text-transform:uppercase;margin-bottom:32px;
+  opacity:0;animation:fadeUp 0.8s 0.2s forwards;
+}
+.hero-wordmark{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(80px,18vw,220px);
+  line-height:0.88;
+  letter-spacing:-2px;
+  opacity:0;animation:fadeUp 1s 0.4s forwards;
+}
+.hero-wordmark .line1{display:block;color:var(--white);}
+.hero-wordmark .sep{
+  display:block;height:3px;
+  background:var(--gold);
+  width:100%;margin:16px 0;
+  transform:scaleX(0);transform-origin:left;
+  animation:lineIn 0.8s 1s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.hero-wordmark .line2{display:block;color:var(--white);}
+.hero-tagline{
+  font-size:11px;letter-spacing:6px;color:var(--gold);
+  text-transform:uppercase;margin-top:28px;
+  opacity:0;animation:fadeUp 0.8s 0.9s forwards;
+  font-weight:600;
+}
+.hero-sub{
+  font-size:14px;color:var(--muted);
+  margin-top:16px;font-weight:300;letter-spacing:0.5px;
+  max-width:380px;line-height:1.7;
+  opacity:0;animation:fadeUp 0.8s 1.1s forwards;
+}
+.hero-actions{
+  display:flex;gap:12px;margin-top:40px;
+  opacity:0;animation:fadeUp 0.8s 1.3s forwards;
+}
+.btn-primary{
+  font-size:11px;letter-spacing:3px;color:var(--bg);
+  background:var(--white);border:none;cursor:pointer;
+  padding:14px 36px;text-transform:uppercase;
+  font-family:'Epilogue',sans-serif;font-weight:700;
+  text-decoration:none;transition:background 0.2s,transform 0.15s;
+  display:inline-block;
+}
+.btn-primary:hover{background:var(--gold);transform:translateY(-2px);}
+.btn-ghost{
+  font-size:11px;letter-spacing:3px;color:var(--muted);
+  background:transparent;border:1px solid var(--border);cursor:pointer;
+  padding:14px 36px;text-transform:uppercase;
+  font-family:'Epilogue',sans-serif;font-weight:500;
+  text-decoration:none;transition:color 0.2s,border-color 0.2s,transform 0.15s;
+  display:inline-block;
+}
+.btn-ghost:hover{color:var(--white);border-color:var(--dimmer);transform:translateY(-2px);}
+.hero-scroll{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fadeUp 0.8s 1.6s forwards;
+}
+.hero-scroll span{font-size:9px;letter-spacing:3px;color:var(--dimmer);text-transform:uppercase;}
+.scroll-line{width:1px;height:40px;background:linear-gradient(var(--dimmer),transparent);animation:scrollBob 1.5s ease-in-out infinite;}
+
+/* ── SECTION SHARED ── */
+section{padding:80px 40px;}
+.section-label{
+  font-size:9px;letter-spacing:5px;color:var(--gold);
+  text-transform:uppercase;margin-bottom:16px;font-weight:600;
+}
+.section-title{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(36px,5vw,64px);
+  letter-spacing:-1px;line-height:0.95;
+  margin-bottom:48px;
+}
+
+/* ── PRODUCTS ── */
+#shop{background:var(--bg);}
+.products-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:48px;flex-wrap:wrap;gap:16px;
+}
+.view-all{
+  font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;
+  text-decoration:none;border-bottom:1px solid var(--border);
+  padding-bottom:2px;transition:color 0.2s,border-color 0.2s;
+}
+.view-all:hover{color:var(--white);border-color:var(--dimmer);}
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:2px;
+}
+.product-card{
+  background:var(--surface);
+  cursor:pointer;position:relative;overflow:hidden;
+  text-decoration:none;color:inherit;
+  display:block;
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.5s,transform 0.5s;
+}
+.product-card.visible{opacity:1;transform:translateY(0);}
+.product-card-img{
+  width:100%;aspect-ratio:1/1;
+  background:var(--surface2);overflow:hidden;position:relative;
+}
+.product-card-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.product-card:hover .product-card-img img{transform:scale(1.06);}
+.product-card-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,8,8,0.5) 0%,transparent 50%);
+  opacity:0;transition:opacity 0.3s;
+}
+.product-card:hover .product-card-img-overlay{opacity:1;}
+.product-card-cta{
+  position:absolute;bottom:0;left:0;right:0;
+  background:var(--gold);color:var(--bg);
+  text-align:center;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;font-weight:700;
+  padding:12px;
+  transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.product-card:hover .product-card-cta{transform:translateY(0);}
+.product-card-info{padding:18px 20px 20px;}
+.product-card-tag{
+  font-size:9px;letter-spacing:3px;color:var(--muted);
+  text-transform:uppercase;margin-bottom:6px;font-weight:500;
+}
+.product-card-title{
+  font-size:14px;font-weight:600;letter-spacing:0.2px;
+  line-height:1.4;margin-bottom:10px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.product-card-price{
+  font-family:'Anton',sans-serif;font-size:18px;
+  color:var(--gold);letter-spacing:1px;
+}
+.products-empty{
+  grid-column:1/-1;text-align:center;
+  padding:80px 20px;color:var(--muted);
+}
+.products-empty .empty-title{
+  font-family:'Anton',sans-serif;font-size:32px;
+  color:var(--dimmer);letter-spacing:2px;margin-bottom:12px;
+}
+.products-empty p{font-size:13px;color:var(--muted);}
+.products-loading{
+  grid-column:1/-1;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px;
+}
+.skeleton{background:var(--surface);aspect-ratio:1.2/1;animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%,100%{opacity:0.4}50%{opacity:0.7}}
+
+/* ── BRAND STRIP ── */
+.brand-strip{
+  padding:60px 40px;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  text-align:center;
+}
+.brand-stat .num{
+  font-family:'Anton',sans-serif;font-size:clamp(40px,6vw,72px);
+  color:var(--white);letter-spacing:-1px;
+}
+.brand-stat .num span{color:var(--gold);}
+.brand-stat .lbl{
+  font-size:10px;letter-spacing:3px;color:var(--muted);
+  text-transform:uppercase;margin-top:6px;font-weight:500;
+}
+
+/* ── ABOUT ── */
+#about{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  border-top:1px solid var(--border);
+}
+.about-content .section-title{margin-bottom:24px;}
+.about-body{
+  font-size:15px;color:var(--muted);line-height:1.85;
+  font-weight:300;max-width:500px;
+}
+.about-body p+p{margin-top:16px;}
+.about-body strong{color:var(--white);font-weight:500;}
+.about-right{position:relative;}
+.about-quote{
+  border-left:2px solid var(--gold);
+  padding:28px 32px;
+  background:var(--surface);
+}
+.about-quote-text{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(22px,3vw,34px);
+  line-height:1.2;letter-spacing:-0.5px;
+  color:var(--white);
+}
+.about-quote-attr{
+  font-size:10px;letter-spacing:3px;color:var(--gold);
+  text-transform:uppercase;margin-top:16px;font-weight:600;
+}
+.about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;}
+.about-tag{
+  font-size:9px;letter-spacing:2px;color:var(--muted);
+  border:1px solid var(--border);padding:6px 14px;
+  text-transform:uppercase;font-weight:500;
+}
+
+/* ── NEWSLETTER ── */
+#newsletter{
+  background:var(--surface);
+  text-align:center;
+  border-top:1px solid var(--border);
+  padding:80px 40px;
+}
+#newsletter .section-title{margin-bottom:12px;}
+.newsletter-sub{
+  font-size:14px;color:var(--muted);font-weight:300;
+  max-width:440px;margin:0 auto 40px;line-height:1.7;
+}
+.newsletter-form{
+  display:flex;max-width:480px;margin:0 auto;
+  border:1px solid var(--border);
+  background:var(--bg);
+  transition:border-color 0.2s;
+}
+.newsletter-form:focus-within{border-color:var(--dimmer);}
+.newsletter-input{
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--white);font-family:'Epilogue',sans-serif;
+  font-size:13px;padding:16px 20px;
+  placeholder-color:var(--muted);
+}
+.newsletter-input::placeholder{color:var(--muted);}
+.newsletter-btn{
+  background:var(--white);color:var(--bg);border:none;
+  cursor:pointer;padding:16px 24px;
+  font-family:'Epilogue',sans-serif;font-size:10px;
+  letter-spacing:3px;text-transform:uppercase;font-weight:700;
+  transition:background 0.2s;flex-shrink:0;
+}
+.newsletter-btn:hover{background:var(--gold);}
+.newsletter-note{
+  font-size:11px;color:var(--dimmer);margin-top:14px;letter-spacing:0.3px;
+}
+.newsletter-success{
+  display:none;
+  font-size:13px;color:var(--gold);letter-spacing:1px;
+  margin-top:16px;
+}
+
+/* ── FOOTER ── */
+footer{
+  padding:40px 40px 32px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;
+}
+.footer-logo{
+  font-family:'Anton',sans-serif;
+  font-size:13px;letter-spacing:4px;color:var(--dimmer);
+  text-decoration:none;
+}
+.footer-links{display:flex;gap:24px;list-style:none;flex-wrap:wrap;}
+.footer-links a{
+  font-size:10px;letter-spacing:2px;color:var(--dimmer);
+  text-decoration:none;text-transform:uppercase;
+  transition:color 0.2s;
+}
+.footer-links a:hover{color:var(--white);}
+.footer-copy{
+  font-size:10px;color:var(--dimmer);letter-spacing:1px;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes lineIn{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+@keyframes scrollBob{
+  0%,100%{opacity:1;transform:scaleY(1)}
+  50%{opacity:0.3;transform:scaleY(0.6)}
+}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .nav-hamburger{display:flex;}
+  section{padding:60px 20px;}
+  .brand-strip{padding:48px 20px;grid-template-columns:repeat(3,1fr);gap:1px;}
+  #about{grid-template-columns:1fr;gap:40px;padding:60px 20px;}
+  .hero-actions{flex-direction:column;align-items:center;}
+  footer{padding:32px 20px;flex-direction:column;align-items:flex-start;gap:16px;}
+  .products-header{flex-direction:column;align-items:flex-start;}
+}
+@media(max-width:600px){
+  .brand-strip{grid-template-columns:1fr;gap:1px;}
+  .brand-strip>*+*{border-top:1px solid var(--border);}
+  .brand-stat{padding:28px 20px;}
+  .nav-logo .top,.nav-logo .bot{font-size:12px;letter-spacing:5px;}
+}
+
+/* ── MOBILE NAV MENU ── */
+.mobile-menu{
+  display:none;
+  position:fixed;inset:0;z-index:200;
+  background:var(--bg);flex-direction:column;
+  justify-content:center;align-items:center;gap:32px;
+  padding:40px;
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+  font-family:'Anton',sans-serif;font-size:40px;
+  letter-spacing:4px;color:var(--white);text-decoration:none;
+  transition:color 0.2s;
+}
+.mobile-menu a:hover{color:var(--gold);}
+.mobile-menu-close{
+  position:absolute;top:24px;right:24px;
+  background:none;border:none;cursor:pointer;
+  font-size:28px;color:var(--muted);line-height:1;
+}
+</style>
+</head>
+<body>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close menu">&#x2715;</button>
+  <a href="#shop" onclick="closeMobileMenu()">SHOP</a>
+  <a href="#about" onclick="closeMobileMenu()">ABOUT</a>
+  <a href="#newsletter" onclick="closeMobileMenu()">DROPS</a>
+  <a href="https://www.etsy.com/shop/NullMade" target="_blank" rel="noopener">ETSY</a>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo" aria-label="NULLMADE home">
+    <span class="top">NØLL</span>
+    <span class="line"></span>
+    <span class="bot">MADE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#newsletter">Drops</a></li>
+  </ul>
+  <a href="https://www.etsy.com/shop/NullMade" target="_blank" rel="noopener" class="nav-cta">Shop Etsy</a>
+  <button class="nav-hamburger" onclick="openMobileMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── TICKER ── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="ticker">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <p class="hero-eyebrow">Dark anime · gaming · alt culture</p>
+  <h1 class="hero-wordmark">
+    <span class="line1">NØLL</span>
+    <span class="sep"></span>
+    <span class="line2">MADE</span>
+  </h1>
+  <p class="hero-tagline">Dark by default</p>
+  <p class="hero-sub">Graphic tees for the ones who get it. Each design is generated, listed, and shipped — no filler, no mainstream.</p>
+  <div class="hero-actions">
+    <a href="#shop" class="btn-primary">Browse Drops</a>
+    <a href="https://www.etsy.com/shop/NullMade" target="_blank" rel="noopener" class="btn-ghost">View on Etsy</a>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ── BRAND STRIP ── -->
+<div class="brand-strip">
+  <div class="brand-stat">
+    <div class="num" id="stat-products">—</div>
+    <div class="lbl">Designs Live</div>
+  </div>
+  <div class="brand-stat">
+    <div class="num">100<span>%</span></div>
+    <div class="lbl">Print on Demand</div>
+  </div>
+  <div class="brand-stat">
+    <div class="num">3<span>–</span>7</div>
+    <div class="lbl">Day Fulfillment</div>
+  </div>
+</div>
+
+<!-- ── SHOP ── -->
+<section id="shop">
+  <div class="products-header">
+    <div>
+      <p class="section-label">Current Drop</p>
+      <h2 class="section-title">All Designs</h2>
+    </div>
+    <a href="https://www.etsy.com/shop/NullMade" target="_blank" rel="noopener" class="view-all">View all on Etsy &rarr;</a>
+  </div>
+  <div class="products-grid" id="productsGrid">
+    <!-- skeletons while loading -->
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-content">
+    <p class="section-label">The Brand</p>
+    <h2 class="section-title">Dark<br>by<br>default.</h2>
+    <div class="about-body">
+      <p>NullMade exists for the <strong>side characters, the villains, the midnight grinders</strong> — the people the algorithm ignores but real fans remember.</p>
+      <p>Every design is AI-generated with intention. Dark palettes, anime references, internet culture. Nothing is generic. Nothing is made to please everyone.</p>
+      <p>Heavyweight unisex cotton. DTG print. Ships from the US. <strong>No middlemen. No warehouse. No waste.</strong></p>
+    </div>
+    <div class="about-tags">
+      <span class="about-tag">Anime</span>
+      <span class="about-tag">Dark Aesthetic</span>
+      <span class="about-tag">Gaming</span>
+      <span class="about-tag">Alt Culture</span>
+      <span class="about-tag">Print on Demand</span>
+    </div>
+  </div>
+  <div class="about-right">
+    <div class="about-quote">
+      <div class="about-quote-text">"nobody asked but i'm cosplaying her anyway."</div>
+      <div class="about-quote-attr">— NullMade, always</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NEWSLETTER ── -->
+<section id="newsletter">
+  <p class="section-label">Stay in the loop</p>
+  <h2 class="section-title">Get Early<br>Drop Access</h2>
+  <p class="newsletter-sub">New designs drop automatically. Sign up to get notified before they hit the shop — no spam, no filler.</p>
+  <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletter(event)">
+    <input type="email" class="newsletter-input" id="emailInput" placeholder="your@email.com" required autocomplete="email">
+    <button type="submit" class="newsletter-btn">Notify Me</button>
+  </form>
+  <p class="newsletter-note">No spam. One email per drop. Unsubscribe anytime.</p>
+  <p class="newsletter-success" id="newsletterSuccess">you're in. we'll find you when it drops.</p>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="/" class="footer-logo">NULLMADE</a>
+  <ul class="footer-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="https://www.etsy.com/shop/NullMade" target="_blank" rel="noopener">Etsy</a></li>
+    <li><a href="mailto:nullmade@proton.me">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 NULLMADE. All rights reserved.</p>
+</footer>
+
+<script>
+/* ── TICKER ── */
+(function(){
+  const msgs = [
+    'FREE SHIPPING OVER $50','NEW DESIGNS DROP WEEKLY',
+    'DARK BY DEFAULT','UNISEX HEAVYWEIGHT COTTON',
+    'SHIPS FROM THE US','VILLAIN ARC UNLOCKED',
+    'DTG PRINT QUALITY','MADE FOR THE ONES WHO GET IT',
+  ];
+  const joined = msgs.map(m=>`<span class="ticker-text">${m}</span><span class="ticker-dot">✦</span>`).join('');
+  const el = document.getElementById('ticker');
+  // Duplicate for seamless loop
+  el.innerHTML = joined + joined;
+})();
+
+/* ── MOBILE MENU ── */
+function openMobileMenu(){document.getElementById('mobileMenu').classList.add('open');document.body.style.overflow='hidden';}
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');document.body.style.overflow='';}
+
+/* ── PRODUCTS ── */
+async function loadProducts(){
+  const grid = document.getElementById('productsGrid');
+  try{
+    const r = await fetch('/api/products');
+    if(!r.ok) throw new Error(`${r.status}`);
+    const products = await r.json();
+
+    // Update live product count
+    const statEl = document.getElementById('stat-products');
+    if(statEl && products.length) statEl.textContent = products.length;
+
+    if(!products.length){
+      grid.innerHTML = `
+        <div class="products-empty">
+          <div class="empty-title">COMING SOON</div>
+          <p>New drops are being generated. Check the Etsy shop.</p>
+          <br>
+          <a href="https://www.etsy.com/shop/NullMade" target="_blank" class="btn-primary" style="margin-top:20px;display:inline-block">View on Etsy &rarr;</a>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = products.map((p,i)=>`
+      <a class="product-card" href="${p.etsy_url}" target="_blank" rel="noopener"
+         style="transition-delay:${(i%8)*60}ms">
+        <div class="product-card-img">
+          ${p.image
+            ? `<img src="${p.image}" alt="${escHtml(p.title)}" loading="lazy">`
+            : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#181818">
+                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5">
+                   <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                 </svg>
+               </div>`}
+          <div class="product-card-img-overlay"></div>
+          <div class="product-card-cta">Shop on Etsy &rarr;</div>
+        </div>
+        <div class="product-card-info">
+          <div class="product-card-tag">NullMade Original</div>
+          <div class="product-card-title">${escHtml(p.title)}</div>
+          <div class="product-card-price">$${p.price}</div>
+        </div>
+      </a>`).join('');
+
+    // Staggered reveal on scroll
+    observeCards();
+  } catch(e){
+    console.error('Products fetch failed:',e);
+    grid.innerHTML = `
+      <div class="products-empty">
+        <div class="empty-title">SHOP ON ETSY</div>
+        <p>Browse all NullMade drops directly on the Etsy store.</p>
+        <br>
+        <a href="https://www.etsy.com/shop/NullMade" target="_blank" class="btn-primary" style="margin-top:20px;display:inline-block">Open Shop &rarr;</a>
+      </div>`;
+  }
+}
+
+function escHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function observeCards(){
+  if(!window.IntersectionObserver) {
+    document.querySelectorAll('.product-card').forEach(c=>c.classList.add('visible'));
+    return;
+  }
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.product-card').forEach(c=>io.observe(c));
+}
+
+/* ── NEWSLETTER ── */
+function handleNewsletter(e){
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value.trim();
+  if(!email) return;
+  // Store in localStorage as proof-of-intent; swap for a real service (Mailchimp, ConvertKit, etc.)
+  const subs = JSON.parse(localStorage.getItem('nm_subs')||'[]');
+  if(!subs.includes(email)){subs.push(email);localStorage.setItem('nm_subs',JSON.stringify(subs));}
+  document.getElementById('newsletterForm').style.display='none';
+  document.getElementById('newsletterSuccess').style.display='block';
+}
+
+/* ── SMOOTH SCROLL FOR ANCHOR LINKS ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth'});}
+  });
+});
+
+/* ── NAV OPACITY ON SCROLL ── */
+window.addEventListener('scroll',()=>{
+  const nav = document.querySelector('nav');
+  nav.style.borderBottomColor = window.scrollY > 20 ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.04)';
+},{ passive:true });
+
+loadProducts();
+</script>
+</body>
+</html>
