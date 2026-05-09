@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Privacy Policy — NullMade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Epilogue:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#080808;--white:#f5f5f5;--gold:#f0a500;
+    --dim:rgba(245,245,245,0.55);--dimmer:rgba(245,245,245,0.3);
+    --border:rgba(245,245,245,0.07);
+  }
+  body{background:var(--bg);color:var(--white);font-family:'Epilogue',sans-serif;line-height:1.7;}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 40px;height:64px;
+    background:rgba(8,8,8,0.92);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo{
+    font-family:'Anton',sans-serif;font-size:15px;letter-spacing:5px;
+    color:var(--white);text-decoration:none;
+  }
+  .nav-logo span{color:var(--gold);}
+  .nav-back{
+    font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--dimmer);text-decoration:none;transition:color 0.2s;
+  }
+  .nav-back:hover{color:var(--white);}
+
+  /* CONTENT */
+  main{
+    max-width:860px;margin:0 auto;
+    padding:120px 40px 80px;
+  }
+  .policy-header{margin-bottom:48px;}
+  .policy-header h1{
+    font-family:'Anton',sans-serif;font-size:clamp(32px,5vw,56px);
+    letter-spacing:2px;margin-bottom:12px;
+  }
+  .policy-header p{color:var(--dim);font-size:14px;}
+
+  /* Termly overrides — force white text on dark bg */
+  [data-custom-class='body'],[data-custom-class='body'] *{background:transparent!important;}
+  [data-custom-class='title'],[data-custom-class='title'] *{
+    font-family:'Anton',sans-serif!important;font-size:0!important; /* hide termly title, we use ours */
+  }
+  h1[data-custom-class='title']{display:none;}
+  [data-custom-class='subtitle'],[data-custom-class='subtitle'] *{
+    font-family:'Epilogue',sans-serif!important;color:var(--dim)!important;font-size:13px!important;
+  }
+  [data-custom-class='heading_1'] h2,
+  [data-custom-class='heading_1'] *{
+    font-family:'Anton',sans-serif!important;font-size:18px!important;
+    color:var(--white)!important;letter-spacing:1px;
+  }
+  [data-custom-class='heading_2'] h3,
+  [data-custom-class='heading_2'] *{
+    font-family:'Epilogue',sans-serif!important;font-size:15px!important;
+    color:var(--white)!important;font-weight:700;
+  }
+  [data-custom-class='body_text'],[data-custom-class='body_text'] *{
+    color:var(--dim)!important;font-size:14px!important;
+    font-family:'Epilogue',sans-serif!important;
+  }
+  [data-custom-class='link'],[data-custom-class='link'] *{
+    color:var(--gold)!important;font-size:14px!important;
+    font-family:'Epilogue',sans-serif!important;word-break:break-word!important;
+  }
+  a[data-custom-class='link']{text-decoration:underline;}
+
+  /* Tables */
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+  td,th{
+    border:1px solid var(--border)!important;
+    padding:10px 14px;color:var(--dim)!important;
+    font-family:'Epilogue',sans-serif;
+  }
+  th{color:var(--white)!important;font-weight:700;}
+
+  /* Headings spacing */
+  h2{margin:40px 0 12px;}
+  h3{margin:28px 0 8px;}
+  ul{margin:8px 0 8px 24px;}
+  li{margin-bottom:6px;}
+
+  /* Termly badge — hide it */
+  span[style*="background: url(data:image/svg"]{display:none!important;}
+
+  /* Footer credit */
+  .termly-credit{
+    margin-top:48px;padding-top:24px;
+    border-top:1px solid var(--border);
+    font-size:12px;color:var(--dimmer);
+  }
+  .termly-credit a{color:var(--gold);}
+
+  /* FOOTER */
+  footer{
+    padding:32px 40px;border-top:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:16px;
+  }
+  .footer-logo{
+    font-family:'Anton',sans-serif;font-size:13px;letter-spacing:4px;
+    color:var(--dimmer);text-decoration:none;
+  }
+  .footer-links{display:flex;gap:24px;list-style:none;flex-wrap:wrap;}
+  .footer-links a{
+    font-size:10px;letter-spacing:2px;color:var(--dimmer);
+    text-decoration:none;text-transform:uppercase;transition:color 0.2s;
+  }
+  .footer-links a:hover{color:var(--white);}
+  .footer-copy{font-size:10px;color:var(--dimmer);letter-spacing:1px;}
+
+  @media(max-width:600px){
+    nav{padding:0 20px;}
+    main{padding:100px 20px 60px;}
+    footer{padding:24px 20px;flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">NULL<span>MADE</span></a>
+  <a href="/" class="nav-back">← Back to site</a>
+</nav>
+
+<main>
+  <div class="policy-header">
+    <h1>PRIVACY POLICY</h1>
+    <p>Last updated May 09, 2026</p>
+  </div>
+
+  <!-- Termly policy content -->
+  <div data-custom-class="body">
+    <div><span style="color:rgb(127,127,127)"><strong><span style="font-size:15px"><span data-custom-class="subtitle">Last updated <bdt class="question">May 09, 2026</bdt></span></span></strong></span></div><div><br></div><div style="line-height:1.5"><span style="color:rgb(127,127,127)"><span style="color:rgb(89,89,89);font-size:15px"><span data-custom-class="body_text">This Privacy Notice for <bdt class="question noTranslate">NullMade</bdt> ("we," "us," or "our"), describes how and why we might access, collect, store, use, and/or share ("process") your personal information when you use our services ("Services"), including when you:</span></span></span></div><ul><li data-custom-class="body_text" style="line-height:1.5">Visit our website at <span style="color:rgb(0,58,250)"><a data-custom-class="link" href="https://nullmade.com">nullmade.com</a></span> or any website of ours that links to this Privacy Notice</li><li data-custom-class="body_text" style="line-height:1.5">Engage with us in other related ways, including any marketing or events</li></ul><div style="line-height:1.5"><span data-custom-class="body_text"><strong>Questions or concerns?</strong> Contact us at <a data-custom-class="link" href="mailto:privacy@nullmade.com">privacy@nullmade.com</a>.</span></div><div style="line-height:1.5"><br></div>
+
+    <div id="toc" style="line-height:1.5"><strong><span data-custom-class="heading_1"><h2>TABLE OF CONTENTS</h2></span></strong></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#infocollect">1. WHAT INFORMATION DO WE COLLECT?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#infouse">2. HOW DO WE PROCESS YOUR INFORMATION?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#legalbases">3. WHAT LEGAL BASES DO WE RELY ON?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#whoshare">4. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#inforetain">5. HOW LONG DO WE KEEP YOUR INFORMATION?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#infosafe">6. HOW DO WE KEEP YOUR INFORMATION SAFE?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#infominors">7. DO WE COLLECT INFORMATION FROM MINORS?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#privacyrights">8. WHAT ARE YOUR PRIVACY RIGHTS?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#DNT">9. CONTROLS FOR DO-NOT-TRACK FEATURES</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#uslaws">10. DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#policyupdates">11. DO WE MAKE UPDATES TO THIS NOTICE?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#contact">12. HOW CAN YOU CONTACT US?</a></div>
+    <div style="line-height:1.5"><a data-custom-class="link" href="#request">13. HOW CAN YOU REVIEW, UPDATE, OR DELETE YOUR DATA?</a></div>
+    <div><br></div>
+
+    <div id="infocollect" style="line-height:1.5"><span data-custom-class="heading_1"><h2>1. WHAT INFORMATION DO WE COLLECT?</h2></span><span data-custom-class="body_text">We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about us or our products and Services, or when you contact us. We also automatically collect certain information when you visit our site, such as your IP address, browser type, and device information.</span></div><div><br></div>
+
+    <div id="infouse" style="line-height:1.5"><span data-custom-class="heading_1"><h2>2. HOW DO WE PROCESS YOUR INFORMATION?</h2></span><span data-custom-class="body_text">We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes only with your prior explicit consent.</span></div><div><br></div>
+
+    <div id="legalbases" style="line-height:1.5"><span data-custom-class="heading_1"><h2>3. WHAT LEGAL BASES DO WE RELY ON?</h2></span><span data-custom-class="body_text">We only process your personal information when we believe it is necessary and we have a valid legal reason to do so — with your consent, to comply with laws, to provide you with services, to protect your rights, or to fulfill our legitimate business interests. If you are located in the EU, UK, or Canada, additional rights apply to you under GDPR and applicable law.</span></div><div><br></div>
+
+    <div id="whoshare" style="line-height:1.5"><span data-custom-class="heading_1"><h2>4. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</h2></span><span data-custom-class="body_text">We may share your information with third-party vendors and service providers that perform services for us (such as Printify for order fulfillment and Etsy as our storefront). We may also share your information in connection with a business transfer, or with affiliates and business partners. We do not sell your personal information.</span></div><div><br></div>
+
+    <div id="inforetain" style="line-height:1.5"><span data-custom-class="heading_1"><h2>5. HOW LONG DO WE KEEP YOUR INFORMATION?</h2></span><span data-custom-class="body_text">We will only keep your personal information for as long as it is necessary for the purposes set out in this Privacy Notice, unless a longer retention period is required or permitted by law.</span></div><div><br></div>
+
+    <div id="infosafe" style="line-height:1.5"><span data-custom-class="heading_1"><h2>6. HOW DO WE KEEP YOUR INFORMATION SAFE?</h2></span><span data-custom-class="body_text">We have implemented appropriate technical and organizational security measures designed to protect the security of any personal information we process. However, no electronic transmission over the Internet can be guaranteed to be 100% secure.</span></div><div><br></div>
+
+    <div id="infominors" style="line-height:1.5"><span data-custom-class="heading_1"><h2>7. DO WE COLLECT INFORMATION FROM MINORS?</h2></span><span data-custom-class="body_text">We do not knowingly collect, solicit data from, or market to children under 18 years of age. By using our Services, you represent that you are at least 18.</span></div><div><br></div>
+
+    <div id="privacyrights" style="line-height:1.5"><span data-custom-class="heading_1"><h2>8. WHAT ARE YOUR PRIVACY RIGHTS?</h2></span><span data-custom-class="body_text">Depending on your location, you may have the right to request access to, correct, or delete your personal information. You may also have the right to withdraw consent to our processing of your personal information. To exercise your rights, please contact us at <a data-custom-class="link" href="mailto:privacy@nullmade.com">privacy@nullmade.com</a> or submit a <a data-custom-class="link" href="https://app.termly.io/dsar/84d9c2d2-c2ce-4044-98b9-057036c1c6ff" target="_blank" rel="noopener">data subject access request</a>.</span></div><div><br></div>
+
+    <div id="DNT" style="line-height:1.5"><span data-custom-class="heading_1"><h2>9. CONTROLS FOR DO-NOT-TRACK FEATURES</h2></span><span data-custom-class="body_text">Most web browsers include a Do-Not-Track ("DNT") feature. We do not currently respond to DNT browser signals as no uniform technology standard has been finalized.</span></div><div><br></div>
+
+    <div id="uslaws" style="line-height:1.5"><span data-custom-class="heading_1"><h2>10. DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?</h2></span><span data-custom-class="body_text">If you are a resident of California, Colorado, Connecticut, or other US states with applicable privacy laws, you may have additional rights including the right to know, access, correct, delete, and opt out of the sale of your personal information. To exercise these rights, contact us at <a data-custom-class="link" href="mailto:privacy@nullmade.com">privacy@nullmade.com</a>.</span></div><div><br></div>
+
+    <div id="policyupdates" style="line-height:1.5"><span data-custom-class="heading_1"><h2>11. DO WE MAKE UPDATES TO THIS NOTICE?</h2></span><span data-custom-class="body_text">Yes, we will update this notice as necessary to stay compliant with relevant laws. The updated version will be indicated by an updated "Last updated" date at the top of this page.</span></div><div><br></div>
+
+    <div id="contact" style="line-height:1.5"><span data-custom-class="heading_1"><h2>12. HOW CAN YOU CONTACT US?</h2></span><span data-custom-class="body_text">If you have questions or comments about this notice, you may contact us at:<br><br><strong>NullMade</strong><br>1195 Gordon Ave<br>West Vancouver, BC V7T 1P8<br>Canada<br><a data-custom-class="link" href="mailto:privacy@nullmade.com">privacy@nullmade.com</a></span></div><div><br></div>
+
+    <div id="request" style="line-height:1.5"><span data-custom-class="heading_1"><h2>13. HOW CAN YOU REVIEW, UPDATE, OR DELETE YOUR DATA?</h2></span><span data-custom-class="body_text">Based on the applicable laws of your country or state of residence, you may have the right to request access to, correct, or delete your personal information. To do so, please submit a <a data-custom-class="link" href="https://app.termly.io/dsar/84d9c2d2-c2ce-4044-98b9-057036c1c6ff" target="_blank" rel="noopener">data subject access request</a>.</span></div>
+
+    <div class="termly-credit">This Privacy Policy was created using <a href="https://termly.io/products/privacy-policy-generator/" target="_blank" rel="noopener">Termly's Privacy Policy Generator</a>.</div>
+  </div>
+</main>
+
+<footer>
+  <a href="/" class="footer-logo">NULLMADE</a>
+  <ul class="footer-links">
+    <li><a href="/#shop">Shop</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="https://www.etsy.com/shop/NullMade" target="_blank" rel="noopener">Etsy</a></li>
+    <li><a href="mailto:nullmade@proton.me">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 NULLMADE. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
