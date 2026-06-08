@@ -2,7 +2,10 @@
   "version": 2,
   "buildCommand": "",
   "outputDirectory": ".",
+  "cleanUrls": true,
   "functions": {
-    "api/products.js": { "memory": 128, "maxDuration": 10 }
+    "api/products.js":        { "memory": 128, "maxDuration": 10 },
+    "api/subscribe.js":       { "memory": 128, "maxDuration": 10 },
+    "api/tiktok-callback.js": { "memory": 128, "maxDuration": 10 }
   }
 }
