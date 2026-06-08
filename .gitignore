@@ -1,0 +1,6 @@
+.vercel
+.env*.local
+node_modules/
+*.log
+_update_freeship_threshold.py
+nullmade_test_video.mp4

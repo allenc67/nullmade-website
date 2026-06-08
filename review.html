@@ -1,0 +1,88 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leave a review — NullMade</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--bg-elev:#131313;--fg:#eaeaea;--fg-muted:#888892;--rule:#1f1f24;--rule-hi:#2e2e36;--accent:#ff6b35;--f-mono:'JetBrains Mono',monospace;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,-apple-system,sans-serif;display:flex;justify-content:center;padding:40px 20px 70px;-webkit-font-smoothing:antialiased;}
+.card{width:100%;max-width:560px;}
+.mark{font-family:Anton,sans-serif;font-size:22px;color:var(--fg);text-decoration:none;}
+h1{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(2rem,7vw,3rem);line-height:1;margin:26px 0 8px;}
+.sub{color:var(--fg-muted);font-size:14px;line-height:1.55;margin-bottom:24px;}
+label{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);margin:20px 0 8px;}
+select,input,textarea{width:100%;background:var(--bg-elev);border:1px solid var(--rule-hi);color:var(--fg);padding:13px 14px;font-family:Inter,sans-serif;font-size:15px;outline:none;border-radius:0;}
+select:focus,input:focus,textarea:focus{border-color:var(--accent);}
+textarea{min-height:120px;resize:vertical;}
+.stars{display:flex;gap:8px;font-size:34px;line-height:1;}
+.stars span{color:var(--rule-hi);cursor:pointer;transition:color .1s,transform .1s;}
+.stars span.on{color:var(--accent);}
+.stars span:hover{transform:scale(1.12);}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;}
+button{width:100%;margin-top:28px;background:var(--accent);color:#0a0a0a;border:0;padding:18px;font-family:var(--f-mono);font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;}
+button:disabled{opacity:.6;cursor:default;}
+.msg{margin-top:14px;font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;min-height:14px;}
+.msg.err{color:#d9685f;}
+#thanks{display:none;text-align:center;padding:36px 0;}
+#thanks.show{display:block;}
+.foot{margin-top:44px;font-family:var(--f-mono);font-size:11px;color:var(--fg-muted);letter-spacing:.08em;}
+</style></head><body>
+<div class="card">
+  <a class="mark" href="/">NULLMADE<sup>®</sup></a>
+  <div id="form">
+    <h1>Leave a review</h1>
+    <p class="sub">Bought something? Tell it straight — fit, print, whether the joke landed. Real feedback only; we don't fake reviews, so yours actually matters.</p>
+    <label>Which one?</label>
+    <select id="product"><option value="">Loading…</option></select>
+    <label>Rating</label>
+    <div class="stars" id="stars"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div>
+    <label>Your name</label>
+    <input id="name" maxlength="80" placeholder="First name + last initial">
+    <label>Email <span style="text-transform:none;letter-spacing:0">(optional · never published)</span></label>
+    <input id="email" type="email" maxlength="160" placeholder="so we can follow up if needed">
+    <label>Your review</label>
+    <textarea id="body" maxlength="2000" placeholder="Fit, print quality, did it land…"></textarea>
+    <input class="hp" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" placeholder="Leave blank">
+    <button id="submit">Submit review</button>
+    <div class="msg" id="msg"></div>
+  </div>
+  <div id="thanks">
+    <h1>Thank you.</h1>
+    <p class="sub">That genuinely helps — we read every one. Once it's approved it'll show up on the product page.</p>
+    <a class="mark" href="/drops-grid" style="font-size:14px;color:var(--accent)">← Back to the drops</a>
+  </div>
+  <div class="foot">NULLMADE® · QUIETLY CLEVER MERCH</div>
+</div>
+<script>
+const SF={d:'famt0z-vw.myshopify.com',t:'0231e1f7d0b12a4e2e5861f23a6a82da'};
+const clean=t=>{let s=(t||'').split('—')[0].split('|')[0].replace(/[^\x00-\x7F].*$/,'').trim();return s||(t||'').split('|')[0].trim()||'Untitled';};
+let rating=0;
+const starsEl=document.getElementById('stars').children;
+function setStars(v){rating=v;for(let i=0;i<5;i++)starsEl[i].classList.toggle('on',i<v);}
+[...starsEl].forEach(s=>s.onclick=()=>setStars(+s.dataset.v));
+const sel=document.getElementById('product');
+const params=new URLSearchParams(location.search);
+const pre=(params.get('product')||params.get('handle')||'').trim();
+const Q=`{ products(first:250, sortKey:CREATED_AT, reverse:true){ edges{ node{ handle title } } } }`;
+fetch(`https://${SF.d}/api/2025-01/graphql.json`,{method:'POST',headers:{'X-Shopify-Storefront-Access-Token':SF.t,'Content-Type':'application/json'},body:JSON.stringify({query:Q})})
+ .then(r=>r.json()).then(d=>{
+   const ps=((d.data&&d.data.products.edges)||[]).map(e=>e.node);
+   sel.innerHTML='<option value="">— pick a product —</option>'+ps.map(p=>`<option value="${p.handle}" data-title="${clean(p.title)}"${p.handle===pre?' selected':''}>${clean(p.title)}</option>`).join('');
+ }).catch(()=>{sel.innerHTML='<option value="">(couldn\'t load — name it in your review)</option>';});
+document.getElementById('submit').onclick=async function(){
+  const btn=this,msg=document.getElementById('msg');msg.className='msg';msg.textContent='';
+  const handle=sel.value,title=sel.selectedOptions[0]?(sel.selectedOptions[0].dataset.title||sel.selectedOptions[0].textContent):'';
+  const name=document.getElementById('name').value.trim(),body=document.getElementById('body').value.trim(),email=document.getElementById('email').value.trim(),website=document.getElementById('website').value;
+  if(!rating){msg.className='msg err';msg.textContent='Pick a star rating.';return;}
+  if(!name){msg.className='msg err';msg.textContent='Add your name.';return;}
+  if(!body){msg.className='msg err';msg.textContent='Write a line or two.';return;}
+  btn.disabled=true;btn.textContent='Sending…';
+  try{
+    const r=await fetch('/api/review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rating,name,body,email,product:title,handle,website})});
+    if(!r.ok)throw new Error();
+    document.getElementById('form').style.display='none';document.getElementById('thanks').classList.add('show');window.scrollTo(0,0);
+  }catch(e){btn.disabled=false;btn.textContent='Submit review';msg.className='msg err';msg.textContent='Hmm — that didn\'t go through. Try again in a sec.';}
+};
+</script></body></html>

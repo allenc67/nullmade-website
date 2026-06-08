@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ALL DROPS — NullMade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--bg-elev:#131313;--fg:#eaeaea;--fg-muted:#888892;--rule:#1f1f24;--rule-hi:#2e2e36;--accent:#ff6b35;
+--f-display:'Anton',sans-serif;--f-body:'Inter',-apple-system,sans-serif;--f-mono:'JetBrains Mono',monospace;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{overflow-x:clip;}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1320px;margin:0 auto;padding:46px max(20px,4vw) 90px;}
+.topnote{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:30px;}
+.head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--rule);padding-bottom:22px;margin-bottom:22px;}
+h1{font-family:var(--f-display);font-size:clamp(3rem,9vw,5.6rem);line-height:.88;letter-spacing:-.01em;}
+h1 .o{color:var(--accent);font-style:italic;}
+.meta{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:var(--fg-muted);text-align:right;text-transform:uppercase;line-height:1.8;}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px;}
+.tab{font-family:var(--f-mono);font-size:12px;letter-spacing:.07em;color:var(--fg-muted);background:var(--bg-elev);border:1px solid var(--rule);padding:9px 15px;cursor:pointer;text-transform:uppercase;transition:.15s;}
+.tab:hover{color:var(--fg);border-color:var(--rule-hi);}
+.tab.on{color:var(--bg);background:var(--fg);border-color:var(--fg);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px;}
+.card{display:block;background:var(--bg-elev);border:1px solid var(--rule);text-decoration:none;color:inherit;transition:.18s;}
+.card:hover{border-color:var(--accent);transform:translateY(-3px);}
+.card .imgwrap{position:relative;aspect-ratio:4/5;overflow:hidden;background:#0e0e0e;}
+.card img{width:100%;height:100%;object-fit:cover;display:block;transition:.45s ease;}
+.card:hover img{transform:scale(1.045);}
+.card .imgwrap .wlayer{position:absolute;inset:0;opacity:0;transition:transform .45s ease;}
+.card .imgwrap .wlayer.base{opacity:1;}
+.card:hover .imgwrap .wlayer{transform:scale(1.045);}
+.card .info{padding:14px 14px 17px;}
+.card .cat{font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;}
+.card .name{font-family:var(--f-display);font-size:18px;line-height:1.03;margin:8px 0 11px;text-transform:uppercase;}
+.card .price{font-family:var(--f-mono);font-size:13px;color:var(--fg);}
+.loading{font-family:var(--f-mono);color:var(--fg-muted);letter-spacing:.12em;padding:50px 0;}
+@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr);}.card .name{font-size:14px;}.card .info{padding:11px 11px 14px;}}
+</style></head><body>
+<div class="wrap">
+  <div class="topnote">&#9707; The full collection &middot; indexed by date</div>
+  <div class="head">
+    <h1>ALL <span class="o">DROPS.</span></h1>
+    <div class="meta"><span id="count">&mdash; entries</span><br>indexed by date</div>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="grid"><div class="loading">Loading drops&hellip;</div></div>
+</div>
+<script>
+const grid=document.getElementById('grid'),tabsEl=document.getElementById('tabs'),countEl=document.getElementById('count');
+const SF={d:'famt0z-vw.myshopify.com',t:'0231e1f7d0b12a4e2e5861f23a6a82da'};
+const clean=t=>{let s=(t||'').split('—')[0].split('|')[0].replace(/[^\x00-\x7F].*$/,'').trim();return s||(t||'').split('|')[0].trim()||'Untitled';};
+const money=p=>'$'+(Number(p)||0).toFixed(2);
+const catOf=pt=>{pt=(pt||'').toLowerCase();if(/mug/.test(pt))return'Mugs';if(/poster|print/.test(pt))return'Posters';if(/candle/.test(pt))return'Candles';return'Shirts';};
+const ORDER=['Natural','Sport Grey','White','Charcoal','Dark Heather','Navy','Forest Green','Maroon','Black'];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sz=u=>u?u+(u.includes('?')?'&':'?')+'width=620':u;
+let products=[],cat='All',_waveStop=null;
+function initColorWave(entries){
+  if(RM) return function(){};
+  var STEP=1500,COL_LAG=0.5,ROW_LAG=0.34,raf=0,t0=null,dead=false;
+  var cards=entries.map(function(e){return{el:e.el,layers:[e.base].concat(e.extra.map(function(x){return x.img;})),extra:e.extra,col:0,row:0,on:false,ready:false,loaded:false,paused:false};});
+  var N=cards.length?cards[0].layers.length:3;
+  function assign(){var rows={};cards.forEach(function(c,i){var t=c.el.offsetTop;(rows[t]=rows[t]||[]).push(i);});
+    Object.keys(rows).map(Number).sort(function(a,b){return a-b;}).forEach(function(t,r){rows[t].forEach(function(i,col){cards[i].col=col;cards[i].row=r;});});}
+  assign();window.addEventListener('resize',assign);
+  var io=new IntersectionObserver(function(obs){obs.forEach(function(o){var c=null;for(var i=0;i<cards.length;i++){if(cards[i].el===o.target){c=cards[i];break;}}if(!c)return;c.on=o.isIntersecting;
+    if(o.isIntersecting&&!c.ready){c.ready=true;Promise.all(c.extra.map(function(x){x.img.src=x.src;return x.img.decode?x.img.decode().catch(function(){}):Promise.resolve();})).then(function(){c.loaded=true;});}});},{rootMargin:'250px'});
+  cards.forEach(function(c){io.observe(c.el);c.el.addEventListener('mouseenter',function(){c.paused=true;});c.el.addEventListener('mouseleave',function(){c.paused=false;});});
+  function frame(now){if(dead)return;if(t0===null)t0=now;var base=(now-t0)/STEP;
+    for(var i=0;i<cards.length;i++){var c=cards[i];if(!c.on||!c.loaded||c.paused)continue;
+      var phase=base-c.col*COL_LAG-c.row*ROW_LAG;var fl=Math.floor(phase),f=phase-fl,e=f*f*(3-2*f);var cur=((fl%N)+N)%N,nxt=(fl+1)%N;
+      for(var k=0;k<N;k++)c.layers[k].style.opacity=k===cur?(1-e):(k===nxt?e:0);}
+    raf=requestAnimationFrame(frame);}
+  raf=requestAnimationFrame(frame);
+  return function(){dead=true;cancelAnimationFrame(raf);io.disconnect();window.removeEventListener('resize',assign);};
+}
+function render(){
+  const items=cat==='All'?products:products.filter(p=>p.category===cat);
+  if(_waveStop){_waveStop();_waveStop=null;}
+  grid.innerHTML=items.map(p=>{
+    const cm=p.colors||{};
+    const wave=!RM&&ORDER.every(c=>cm[c]);
+    const imgHTML=wave
+      ? ORDER.map(function(c,k){return k===0?'<img class="wlayer base" src="'+sz(cm[c])+'" alt="'+clean(p.title)+'" loading="lazy">':'<img class="wlayer" data-src="'+sz(cm[c])+'" alt="">';}).join('')
+      :`<img loading="lazy" src="${sz(p.image)}" alt="${clean(p.title)}">`;
+    return `<a class="card" href="/products/${p.handle}">
+      <div class="imgwrap">${imgHTML}</div>
+      <div class="info"><div class="cat">${p.category}</div>
+      <div class="name">${clean(p.title)}</div><div class="price">${money(p.price)}</div></div></a>`;
+  }).join('');
+  const entries=[];
+  grid.querySelectorAll('.card').forEach(card=>{const ls=card.querySelectorAll('.imgwrap .wlayer');if(ls.length>=2){const ex=[];for(var k=1;k<ls.length;k++)ex.push({img:ls[k],src:ls[k].dataset.src});entries.push({el:card,base:ls[0],extra:ex});}});
+  if(entries.length)_waveStop=initColorWave(entries);
+}
+function buildTabs(){
+  const cats={};products.forEach(p=>{cats[p.category]=(cats[p.category]||0)+1;});
+  const all=['All',...['Shirts','Mugs','Posters','Candles'].filter(c=>cats[c])];
+  tabsEl.innerHTML=all.map(c=>`<div class="tab${c===cat?' on':''}" data-c="${c}">${c} [${c==='All'?products.length:cats[c]}]</div>`).join('');
+  tabsEl.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{cat=t.dataset.c;buildTabs();render();});
+}
+const Q=`{ products(first:250, sortKey:CREATED_AT, reverse:true){ edges{ node{ handle title productType featuredImage{url} priceRange{minVariantPrice{amount}} variants(first:60){ edges{ node{ selectedOptions{name value} image{url} } } } } } } }`;
+fetch(`https://${SF.d}/api/2025-01/graphql.json`,{method:'POST',headers:{'X-Shopify-Storefront-Access-Token':SF.t,'Content-Type':'application/json'},body:JSON.stringify({query:Q})})
+ .then(r=>r.json()).then(d=>{
+  products=((d.data&&d.data.products.edges)||[]).map(e=>{
+    const n=e.node,vs=(n.variants.edges||[]).map(x=>x.node);
+    const cmap={};vs.forEach(v=>{const co=(v.selectedOptions.find(o=>o.name.toLowerCase()==='color')||{}).value;if(co&&!cmap[co]&&v.image&&v.image.url)cmap[co]=v.image.url;});
+    const img=cmap['Natural']||(n.featuredImage&&n.featuredImage.url)||((vs.find(v=>v.image)||{}).image||{}).url||'';
+    return {handle:n.handle,title:n.title,price:(n.priceRange&&n.priceRange.minVariantPrice.amount)||'0',image:img,category:catOf(n.productType),colors:cmap};
+  });
+  countEl.textContent=products.length+' entries';buildTabs();render();
+ }).catch(()=>{grid.innerHTML='<div class="loading">Could not load products.</div>';});
+</script></body></html>
