@@ -50,7 +50,7 @@ cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
 .thumbs button{width:84px;height:84px;border:1px solid var(--rule);background:var(--bg-elev);overflow:hidden;opacity:.5;transition:opacity .15s,border-color .15s;}
 .thumbs button.on,.thumbs button:hover{opacity:1;border-color:var(--accent);}
 .thumbs img{width:100%;height:100%;object-fit:cover;}
-.buybox{padding-top:6px;}
+.buybox{padding-top:6px;min-width:0;}
 .cat{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-muted);}
 .buybox h1{font-family:var(--f-display);font-size:clamp(2.6rem,5vw,4.2rem);line-height:.92;text-transform:uppercase;letter-spacing:-.01em;margin:14px 0 10px;}
 .tagline{font-family:var(--f-serif);font-style:italic;font-size:20px;color:var(--fg-muted);margin-bottom:24px;}
@@ -241,13 +241,13 @@ body.modal-open{overflow:hidden;}
 .nm-upsell-price{font-family:var(--f-mono);font-size:11px;color:var(--fg);}
 .nm-upsell-add{width:28px;height:28px;border:1px solid var(--rule-hi);background:none;color:var(--fg);font-size:16px;line-height:1;cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
 .nm-upsell-add:hover{background:var(--accent);color:#000;border-color:var(--accent);}
-.bundle-slots{display:flex;flex-direction:column;gap:16px;margin:2px 0 20px;}
+.bundle-slots{display:flex;flex-direction:column;gap:16px;margin:2px 0 20px;min-width:0;}
 .bslot-intro{font-family:var(--f-body);font-size:12.5px;color:var(--fg-muted);margin:-2px 0 0;}
-.bundle-slot{display:flex;flex-direction:column;gap:9px;}
+.bundle-slot{display:flex;flex-direction:column;gap:9px;min-width:0;}
 .bslot-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;}
 .bslot-label{color:var(--fg-faint);}
 .bslot-chosen{color:var(--accent);font-weight:600;text-transform:none;letter-spacing:.01em;font-size:11.5px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62%;}
-.bslot-strip{display:flex;gap:9px;overflow-x:auto;padding:3px 2px 10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--rule-hi) transparent;}
+.bslot-strip{display:flex;gap:9px;overflow-x:auto;min-width:0;padding:3px 2px 10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--rule-hi) transparent;}
 .bslot-strip::-webkit-scrollbar{height:6px;}
 .bslot-strip::-webkit-scrollbar-thumb{background:var(--rule-hi);border-radius:999px;}
 .bslot-strip::-webkit-scrollbar-track{background:transparent;}
@@ -259,6 +259,21 @@ body.modal-open{overflow:hidden;}
 .bslot-opt.on .bslot-thumb::after{content:"\2713";position:absolute;top:3px;right:4px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;background:var(--accent);color:#0a0a0a;font-size:11px;font-weight:800;border-radius:50%;}
 .bslot-name{font-family:var(--f-body);font-size:11px;line-height:1.25;color:var(--fg-muted);text-align:center;text-transform:none;letter-spacing:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.5em;}
 .bslot-opt.on .bslot-name{color:var(--fg);}
+.bslot-modal{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.bslot-modal[hidden]{display:none;}
+.bslot-modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.74);}
+.bslot-modal-card{position:relative;z-index:1;background:var(--bg-elev);border:1px solid var(--rule-hi);border-radius:14px;width:100%;max-width:360px;max-height:90vh;overflow:auto;padding:18px 18px 20px;}
+.bslot-modal-close{position:absolute;top:6px;right:12px;background:none;border:none;color:var(--fg-muted);font-size:28px;line-height:1;cursor:pointer;padding:4px;}
+.bslot-modal-close:hover{color:var(--fg);}
+.bslot-modal-img{width:100%;aspect-ratio:1/1;background:#f4f4f0;border-radius:10px;overflow:hidden;margin-bottom:12px;}
+.bslot-modal-img img{width:100%;height:100%;object-fit:contain;display:block;}
+.bslot-modal-name{font-weight:700;font-size:16px;color:var(--fg);text-align:center;margin-bottom:15px;}
+.bslot-modal-opts{display:flex;gap:11px;margin-bottom:16px;}
+.bslot-modal-opts label{flex:1;display:flex;flex-direction:column;gap:6px;font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-faint);}
+.bslot-modal-opts select{background:var(--bg);border:1px solid var(--rule-hi);color:var(--fg);padding:12px;font-family:var(--f-body);font-size:14px;border-radius:8px;cursor:pointer;text-transform:none;letter-spacing:0;}
+.bslot-modal-opts select:focus{outline:none;border-color:var(--accent);}
+.bslot-modal-confirm{width:100%;background:var(--accent);color:#0a0a0a;font-weight:800;font-size:14px;letter-spacing:.05em;text-transform:uppercase;padding:15px;border:none;border-radius:10px;cursor:pointer;}
+.bslot-modal-confirm:hover{filter:brightness(1.08);}
 </style></head><body>
 <div class="sale-ticker"><div class="tk"><span>FREE U.S. SHIPPING OVER $20</span><span>BUY 2 · SAVE 10%</span><span>BUY 3 · SAVE 15%</span><span>FREE U.S. SHIPPING OVER $20</span><span>BUY 2 · SAVE 10%</span><span>BUY 3 · SAVE 15%</span></div></div>
 <header><a class="mark" href="/">NULLMADE<sup>®</sup></a><a class="etsy" href="https://www.etsy.com/shop/NullMade" target="_blank" rel="noopener">Shop Etsy</a></header>
@@ -308,6 +323,19 @@ body.modal-open{overflow:hidden;}
     <button type="button" class="nm-cart-go" id="nmCartCheckout">Checkout &rarr;</button>
   </div>
 </aside>
+<div id="bslotModal" class="bslot-modal" hidden>
+  <div class="bslot-modal-overlay" data-bslot-close></div>
+  <div class="bslot-modal-card" role="dialog" aria-modal="true">
+    <button type="button" class="bslot-modal-close" data-bslot-close aria-label="Close">&times;</button>
+    <div class="bslot-modal-img"><img id="bslotModalImg" src="" alt=""></div>
+    <div class="bslot-modal-name" id="bslotModalName"></div>
+    <div class="bslot-modal-opts">
+      <label>Color<select id="bslotModalColor"></select></label>
+      <label>Size<select id="bslotModalSize"></select></label>
+    </div>
+    <button type="button" class="bslot-modal-confirm" id="bslotModalConfirm">Choose this design</button>
+  </div>
+</div>
 <script>window.__P={"id": "gid://shopify/Product/15589252956529", "handle": "probably-mildly-annoyed-ceramic-mug-funny-coffee-mug-nullmade", "title": "PROBABLY MILDLY ANNOYED", "price": "16.98", "currency": "USD", "variants": [{"id": "gid://shopify/ProductVariant/63712849396081", "available": true, "price": "16.98", "opts": {"Size": "11oz"}}, {"id": "gid://shopify/ProductVariant/63712849428849", "available": true, "price": "16.98", "opts": {"Size": "15oz"}}], "colorImg": {}};const SF={d:'famt0z-vw.myshopify.com',t:'0231e1f7d0b12a4e2e5861f23a6a82da'};const P=window.__P;
 function fbqt(ev,ex){try{if(window.fbq)fbq('track',ev,Object.assign({content_name:P.title,content_ids:[P.id],content_type:'product',value:Number(P.price)||0,currency:P.currency||'USD'},ex||{}));}catch(e){}}
 fbqt('ViewContent');
@@ -346,7 +374,8 @@ btn.onclick=async()=>{const v=resolve();if(!v){note.textContent='Select your opt
     var _val=sel.dataset.selected;
     if(!_val||_val==='__same'){addV(v.id);return;}
     const pr=allProducts.find(function(x){return x.handle===_val;});if(!pr){addV(v.id);return;}
-    const mv=(pr.variants||[]).find(function(x){return x.available&&x.opts&&x.opts.Color===want.Color&&x.opts.Size===want.Size;})||(pr.variants||[]).find(function(x){return x.available&&x.opts&&x.opts.Size===want.Size;})||(pr.variants||[]).find(function(x){return x.available;})||(pr.variants||[])[0];
+    var _col=sel.dataset.color||want.Color, _siz=sel.dataset.size||want.Size;
+    const mv=(pr.variants||[]).find(function(x){return x.available&&x.opts&&x.opts.Color===_col&&x.opts.Size===_siz;})||(pr.variants||[]).find(function(x){return x.available&&x.opts&&x.opts.Size===_siz;})||(pr.variants||[]).find(function(x){return x.available;})||(pr.variants||[])[0];
     addV(mv&&mv.id?mv.id:v.id);});}
   const lines=Object.keys(lineMap).map(function(id){return {merchandiseId:id,quantity:lineMap[id]};});
   await addLines(lines);btn.disabled=false;btn.textContent='Add to Cart · $'+bundle.price;note.textContent='';openCart();}
@@ -400,7 +429,7 @@ function renderSlots(){
       +'<span class="bslot-name">'+esc(name)+'</span></button>';
   }
   const cards=card('__same',myImg,'Same design',true)+pool.map(function(p){return card(p.handle,p.image,cleanTitle(p.title),false);}).join('');
-  let html='<div class="bslot-intro">Mix &amp; match — tap a shirt to swap in a different design.</div>';
+  let html='<div class="bslot-intro">Mix &amp; match — tap any shirt to see it bigger and pick its color &amp; size.</div>';
   for(var i=2;i<=n+1;i++){
     var ord=i===2?'2nd':i===3?'3rd':i+'th';
     html+='<div class="bundle-slot" data-slot="'+i+'" data-selected="__same">'
@@ -412,15 +441,46 @@ function renderSlots(){
   [].slice.call(box.querySelectorAll('.bundle-slot')).forEach(function(slot){
     [].slice.call(slot.querySelectorAll('.bslot-opt')).forEach(function(opt){
       opt.addEventListener('click',function(){
-        slot.querySelectorAll('.bslot-opt').forEach(function(o){o.classList.remove('on');});
-        opt.classList.add('on');
-        slot.dataset.selected=opt.dataset.val;
-        var ch=slot.querySelector('.bslot-chosen');
-        if(ch)ch.textContent=opt.dataset.val==='__same'?'Same design':((opt.querySelector('.bslot-name')||{}).textContent||'');
+        if(opt.dataset.val==='__same'){selectSlotDesign(slot,opt,'__same',null,null,'Same design');return;}
+        openBslotModal(slot,opt,opt.dataset.val);
       });
     });
   });
 }
+// Apply a chosen design (+ optional color/size) to a bundle slot.
+function selectSlotDesign(slot,optEl,val,color,size,name){
+  slot.querySelectorAll('.bslot-opt').forEach(function(o){o.classList.remove('on');});
+  if(optEl)optEl.classList.add('on');
+  slot.dataset.selected=val;
+  if(color)slot.dataset.color=color;else slot.removeAttribute('data-color');
+  if(size)slot.dataset.size=size;else slot.removeAttribute('data-size');
+  var ch=slot.querySelector('.bslot-chosen');
+  if(ch)ch.textContent=(val==='__same')?'Same design':(name+(color?(' · '+color):'')+(size?(' · '+size):''));
+}
+// Tap a design -> popup with the enlarged mockup + its own color & size selectors.
+function openBslotModal(slot,optEl,handle){
+  var pr=allProducts.find(function(p){return p.handle===handle;});if(!pr)return;
+  var m=document.getElementById('bslotModal');if(!m)return;
+  m._slot=slot;m._opt=optEl;m._pr=pr;
+  var im=document.getElementById('bslotModalImg');if(im)im.alt=cleanTitle(pr.title);
+  var nm=document.getElementById('bslotModalName');if(nm)nm.textContent=cleanTitle(pr.title);
+  var colors=[],sizes=[];
+  (pr.variants||[]).forEach(function(vr){if(!vr.available||!vr.opts)return;var c=vr.opts.Color,s=vr.opts.Size;if(c&&colors.indexOf(c)<0)colors.push(c);if(s&&sizes.indexOf(s)<0)sizes.push(s);});
+  var want=chosen();
+  var cs=document.getElementById('bslotModalColor'),ss=document.getElementById('bslotModalSize');
+  if(cs)cs.innerHTML=(colors.length?colors:['Natural']).map(function(c){return '<option'+((slot.dataset.color===c||(!slot.dataset.color&&c===want.Color))?' selected':'')+'>'+esc(c)+'</option>';}).join('');
+  if(ss)ss.innerHTML=(sizes.length?sizes:['M']).map(function(s){return '<option'+((slot.dataset.size===s||(!slot.dataset.size&&s===want.Size))?' selected':'')+'>'+esc(s)+'</option>';}).join('');
+  function _syncImg(){if(!im)return;var u=(pr.colorImg&&cs&&pr.colorImg[cs.value])||pr.image||'';im.src=u;}
+  if(cs)cs.onchange=_syncImg; _syncImg();
+  m.hidden=false;document.body.classList.add('modal-open');
+}
+function closeBslotModal(){var m=document.getElementById('bslotModal');if(m)m.hidden=true;document.body.classList.remove('modal-open');}
+(function(){
+  var cf=document.getElementById('bslotModalConfirm');
+  if(cf)cf.onclick=function(){var m=document.getElementById('bslotModal');if(!m||!m._slot||!m._pr)return;var col=(document.getElementById('bslotModalColor')||{}).value||'',siz=(document.getElementById('bslotModalSize')||{}).value||'';selectSlotDesign(m._slot,m._opt,m._pr.handle,col,siz,cleanTitle(m._pr.title));closeBslotModal();};
+  [].slice.call(document.querySelectorAll('[data-bslot-close]')).forEach(function(el){el.addEventListener('click',closeBslotModal);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeBslotModal();});
+})();
 async function removeLine(lineId){
   if(!shopifyCart)return;
   const d=await shopifyGQL(`mutation($id:ID!,$ids:[ID!]!){ cartLinesRemove(cartId:$id, lineIds:$ids){ cart{ ${CART_FIELDS} } } }`,{id:shopifyCart.id,ids:[lineId]});
@@ -473,7 +533,8 @@ function mapShopifyProduct(n){
   const img=(nat&&nat.image&&nat.image.url)||(n.featuredImage&&n.featuredImage.url)||((vs.find(v=>v.image)||{}).image||{}).url||'';
   const s=((n.productType||'')+' '+(n.title||'')).toLowerCase();
   let cat='shirts';if(/mug/.test(s))cat='mugs';else if(/poster|print/.test(s))cat='posters';else if(/candle/.test(s))cat='candles';
-  return {handle:n.handle,title:n.title,category:cat,image:img,
+  const colorImg={};vs.forEach(function(v){const c=(v.selectedOptions||[]).find(function(o){return o.name.toLowerCase()==='color';});const u=v.image&&v.image.url;if(c&&u&&!colorImg[c.value])colorImg[c.value]=u;});
+  return {handle:n.handle,title:n.title,category:cat,image:img,colorImg:colorImg,
     price:(vs[0]&&vs[0].price&&vs[0].price.amount)?Number(vs[0].price.amount).toFixed(2):'',
     variants:vs.map(v=>({id:v.id,available:v.availableForSale,opts:Object.fromEntries((v.selectedOptions||[]).map(o=>[o.name,o.value]))}))};
 }
