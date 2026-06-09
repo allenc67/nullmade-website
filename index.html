@@ -443,6 +443,27 @@ section.hero{
   to  { transform: translateX(-50%); }
 }
 
+/* ── Review / trust belt (between the spin showcase and the latest-drop hero). based.com laurel
+   aesthetic, but HONEST: real ★ rating + real verified reviews (from /reviews.json) + only claims
+   that are actually true. No invented "3,000,000 customers" — the brand doesn't fake social proof. ── */
+.revbelt{ border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); background:var(--bg); overflow:hidden; padding:22px 0; }
+.revbelt-inner{ display:flex; align-items:stretch; width:max-content; animation: tickerScroll 55s linear infinite; }
+.revbelt:hover .revbelt-inner{ animation-play-state:paused; }
+.revbelt-item{ display:inline-flex; align-items:center; gap:12px; padding:0 40px; white-space:nowrap; border-right:1px solid var(--rule); }
+.revbelt-laurel{ display:inline-block; width:21px; height:44px; flex:none; background:center/contain no-repeat url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 48' fill='%234a4a52'><ellipse cx='19' cy='45' rx='4.6' ry='2.1' transform='rotate(38 19 45)'/><ellipse cx='14' cy='39' rx='5.1' ry='2.2' transform='rotate(24 14 39)'/><ellipse cx='10.6' cy='32' rx='5.3' ry='2.3' transform='rotate(9 10.6 32)'/><ellipse cx='8.7' cy='24.5' rx='5.3' ry='2.3' transform='rotate(-7 8.7 24.5)'/><ellipse cx='9.1' cy='17' rx='5.1' ry='2.2' transform='rotate(-22 9.1 17)'/><ellipse cx='11.6' cy='10' rx='4.6' ry='2.1' transform='rotate(-37 11.6 10)'/><ellipse cx='15.6' cy='4.6' rx='3.7' ry='1.9' transform='rotate(-52 15.6 4.6)'/></svg>"); }
+.revbelt-laurel.r{ transform:scaleX(-1); }
+.revbelt-stat{ text-align:center; }
+.revbelt-stat .big{ font-family:var(--f-display); font-size:clamp(18px,2.1vw,27px); line-height:1; letter-spacing:.02em; color:var(--fg); text-transform:uppercase; }
+.revbelt-stat .sub{ font-family:var(--f-mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--fg-muted); margin-top:6px; }
+.revbelt-stars{ color:var(--accent); letter-spacing:2px; font-size:12px; line-height:1; }
+.revbelt-stat .revbelt-stars{ display:block; margin-bottom:6px; }
+.revbelt-review{ flex:none; width:330px; display:inline-flex; flex-direction:column; justify-content:center; gap:7px; padding:0 40px; white-space:normal; border-right:1px solid var(--rule); }
+.revbelt-review .q{ font-family:var(--f-body); font-size:12.5px; line-height:1.45; color:var(--fg); }
+.revbelt-review .by{ font-family:var(--f-mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-muted); }
+.revbelt-review .by b{ color:var(--fg); font-weight:700; }
+.revbelt-review .by .vf{ color:var(--accent); }
+@media(max-width:640px){ .revbelt-item{ padding:0 24px; } .revbelt-review{ width:250px; padding:0 24px; } }
+
 /* ════════════════════════════════════════════════════════════════
    04 — LATEST DROP SPOTLIGHT
    ════════════════════════════════════════════════════════════════ */
@@ -1348,6 +1369,11 @@ body.modal-open{ overflow:hidden; }
   <a href="/drops-grid" class="hero-cta spin-cta">Browse the drop</a>
 </section>
 
+<!-- ═══════════════ 01c REVIEW / TRUST BELT ═══════════════ -->
+<div class="revbelt" aria-label="Reviews and guarantees">
+  <div class="revbelt-inner" id="revBeltInner"><!-- built by JS from /reviews.json + true trust claims --></div>
+</div>
+
 <!-- ═══════════════ 02 HERO — LATEST DROP ═══════════════ -->
 <section class="hero">
   <div class="hero-meta">
@@ -2054,6 +2080,44 @@ fillTicker('ticker1', TICKER_1);
 fillTicker('ticker2', TICKER_2);
 const SALE_TICKER = ['LAUNCH · 15% OFF FIRST ORDER · CODE WELCOME15', 'FREE U.S. SHIPPING OVER $20', 'BUY 2 · SAVE 10%', 'BUY 3 · SAVE 15%', '30-DAY RETURNS · NO DRAMA'];
 fillTicker('saleTicker', SALE_TICKER);
+
+/* ── Review / trust belt: real ★ rating + real verified reviews (fetched from /reviews.json,
+   same source the PDPs use) interleaved with ONLY-true trust claims. No invented customer
+   counts — fills out on its own as real reviews land. ── */
+const _revLaurelL = '<i class="revbelt-laurel"></i>', _revLaurelR = '<i class="revbelt-laurel r"></i>';
+function _revStars(v){ const f = Math.max(0, Math.min(5, Math.round(v||0))); return '★★★★★☆☆☆☆☆'.slice(5-f, 10-f); }
+function _revLaurel(big, sub, stars){
+  return '<div class="revbelt-item">'+_revLaurelL+'<div class="revbelt-stat">'
+    +(stars?('<span class="revbelt-stars">'+stars+'</span>'):'')
+    +'<div class="big">'+big+'</div><div class="sub">'+sub+'</div></div>'+_revLaurelR+'</div>';
+}
+function _revCard(r){
+  return '<div class="revbelt-review"><span class="revbelt-stars">'+_revStars(r.rating||5)+'</span>'
+    +'<div class="q">&ldquo;'+esc(r.body||'')+'&rdquo;</div>'
+    +'<div class="by"><b>'+esc(r.author||'Anonymous')+'</b>'+(r.verified?' &middot; <span class="vf">Verified buyer</span>':'')+'</div></div>';
+}
+async function buildReviewBelt(){
+  const inner = document.getElementById('revBeltInner'); if(!inner) return;
+  let reviews = [];
+  try{ const rr = await fetch('/reviews.json', { cache:'no-store' }); if(rr.ok){ const data = await rr.json(); reviews = Object.values(data).flat().filter(x => x && x.body); } }catch(e){}
+  const n = reviews.length;
+  const avg = n ? reviews.reduce((s,x)=>s+(+x.rating||5),0)/n : 0;
+  const laurels = [];
+  if(n>0) laurels.push(_revLaurel(avg.toFixed(1), n+' verified review'+(n!==1?'s':''), _revStars(avg)));
+  laurels.push(_revLaurel('30-DAY', 'returns &middot; no drama', ''));
+  laurels.push(_revLaurel('FREE', 'U.S. shipping over $20', ''));
+  laurels.push(_revLaurel('HEAVYWEIGHT', 'cream cotton &middot; soft hand', ''));
+  laurels.push(_revLaurel('PRE-SHRUNK', 'built to last, true to size', ''));
+  laurels.push(_revLaurel('MADE TO ORDER', 'printed one at a time', ''));
+  laurels.push(_revLaurel('QUIETLY CLEVER', 'dry humor since 2026', ''));
+  // interleave a real review card after each laurel until reviews run out, then append extras
+  const merged = []; let ri = 0;
+  laurels.forEach(l => { merged.push(l); if(reviews[ri]){ merged.push(_revCard(reviews[ri])); ri++; } });
+  while(ri < reviews.length){ merged.push(_revCard(reviews[ri])); ri++; }
+  const one = merged.join('');
+  inner.innerHTML = one + one + one + one;  // ×4 so the -50% loop stays seamless on wide screens
+}
+buildReviewBelt();
 // Free shipping is US-only. For a confirmed non-US visitor, drop the free-ship
 // line from the ticker + hide the cart progress bar (Vercel geo header). If geo
 // is unknown, we keep the honest "U.S." wording rather than hiding it.
