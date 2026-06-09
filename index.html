@@ -2129,6 +2129,21 @@ async function loadProducts(){
         p.image = hero;
       }
     });
+    // Force the card color-wave to use guaranteed FRONT mockups per color. Shopify variant
+    // images can point to folded/angle shots on republished products; angle_mockups.json has
+    // the real per-color FRONT for every tee (Natural=local, others=Printify URL).
+    try {
+      const ar = await fetch('/angle_mockups.json', { cache: 'no-store' });
+      if (ar.ok) {
+        const angleMap = await ar.json();
+        allProducts.forEach(p => {
+          const cm = angleMap[p.handle]; if (!cm) return;
+          const fixed = {};
+          Object.keys(cm).forEach(c => { if (cm[c] && cm[c].front) fixed[c] = cm[c].front; });
+          if (Object.keys(fixed).length) p.colors = fixed;
+        });
+      }
+    } catch(e){ console.warn('angle map load failed', e); }
     try { const mr = await fetch('/videos/manifest.json', { cache: 'no-store' }); if (mr.ok) productVideos = await mr.json(); } catch(e){ console.warn('video manifest load failed', e); }
     try { await initCart(); } catch(e){ console.warn('cart init failed', e); }
     maybeApplyUrlDiscount();
