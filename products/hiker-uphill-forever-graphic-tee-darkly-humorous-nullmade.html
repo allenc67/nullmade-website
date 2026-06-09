@@ -18,7 +18,7 @@
 :root{--bg:#0a0a0a;--bg-elev:#131313;--fg:#eaeaea;--fg-muted:#888892;--fg-faint:#4a4a52;
 --rule:#1f1f24;--rule-hi:#2e2e36;--accent:#ff6b35;--f-display:'Anton','Helvetica Neue',sans-serif;
 --f-body:'Inter',-apple-system,sans-serif;--f-mono:'JetBrains Mono',ui-monospace,monospace;
---f-serif:'Newsreader',Georgia,serif;--pad:max(22px,5vw);--max:1240px;}
+--f-serif:'Newsreader',Georgia,serif;--pad:max(22px,4vw);--max:1480px;}
 html{background:var(--bg);color:var(--fg);scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip;}
 body{font-family:var(--f-body);font-size:16px;line-height:1.55;background:var(--bg);color:var(--fg);overflow-x:hidden;}
 ::selection{background:var(--accent);color:#000;}
@@ -38,7 +38,7 @@ header .mark{font-weight:600;letter-spacing:.16em;}header .mark sup{color:var(--
 header .etsy{display:inline-flex;align-items:center;gap:7px;color:var(--fg-muted);}header .etsy:hover{color:var(--accent);}header .etsy::after{content:'→';}
 /* hero PDP */
 .pdp{max-width:var(--max);margin:0 auto;padding:140px var(--pad) 64px;display:grid;grid-template-columns:1.12fr .88fr;gap:60px;align-items:start;}
-.gallery{position:sticky;top:104px;}
+.gallery{position:sticky;top:104px;min-width:0;}
 .main-img{position:relative;aspect-ratio:3/4;background:var(--bg-elev);border:1px solid var(--rule);overflow:hidden;}
 .main-img img{width:100%;height:100%;object-fit:cover;}
 .gal-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border:1px solid var(--rule-hi);
@@ -46,7 +46,7 @@ background:rgba(10,10,10,.62);color:var(--fg);font-size:26px;line-height:1;displ
 cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
 .gal-nav:hover{background:var(--accent);color:#0a0a0a;border-color:var(--accent);}
 .gal-nav.prev{left:12px;}.gal-nav.next{right:12px;}
-.thumbs{display:flex;gap:10px;margin-top:10px;}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
 .thumbs button{width:84px;height:84px;border:1px solid var(--rule);background:var(--bg-elev);overflow:hidden;opacity:.5;transition:opacity .15s,border-color .15s;}
 .thumbs button.on,.thumbs button:hover{opacity:1;border-color:var(--accent);}
 .thumbs img{width:100%;height:100%;object-fit:cover;}
