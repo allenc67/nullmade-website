@@ -336,11 +336,12 @@ body.modal-open{overflow:hidden;}
     <button type="button" class="bslot-modal-confirm" id="bslotModalConfirm">Choose this design</button>
   </div>
 </div>
-<script>window.__P={"id": "gid://shopify/Product/15589252628849", "handle": "professionally-exhausted-matte-poster-funny-work-humor-nullmade", "title": "PROFESSIONALLY EXHAUSTED", "price": "19.98", "currency": "USD", "variants": [{"id": "gid://shopify/ProductVariant/63712847987057", "available": true, "price": "19.98", "opts": {"Size": "11\u2033 x 14\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848019825", "available": true, "price": "19.98", "opts": {"Size": "12\u2033 x 18\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848052593", "available": true, "price": "19.98", "opts": {"Size": "16\u2033 x 20\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848085361", "available": true, "price": "19.98", "opts": {"Size": "18\u2033 x 24\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848118129", "available": true, "price": "19.98", "opts": {"Size": "24\u2033 x 36\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848150897", "available": true, "price": "19.98", "opts": {"Size": "12\" x 12\"", "Paper": "Matte"}}], "colorImg": {}};const SF={d:'famt0z-vw.myshopify.com',t:'0231e1f7d0b12a4e2e5861f23a6a82da'};const P=window.__P;
+<script>window.__P={"id": "gid://shopify/Product/15589252628849", "handle": "professionally-exhausted-matte-poster-funny-work-humor-nullmade", "title": "PROFESSIONALLY EXHAUSTED", "price": "19.98", "currency": "USD", "variants": [{"id": "gid://shopify/ProductVariant/63712847987057", "available": true, "price": "19.98", "opts": {"Size": "11\u2033 x 14\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848019825", "available": true, "price": "19.98", "opts": {"Size": "12\u2033 x 18\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848052593", "available": true, "price": "19.98", "opts": {"Size": "16\u2033 x 20\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848085361", "available": true, "price": "19.98", "opts": {"Size": "18\u2033 x 24\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848118129", "available": true, "price": "19.98", "opts": {"Size": "24\u2033 x 36\u2033", "Paper": "Matte"}}, {"id": "gid://shopify/ProductVariant/63712848150897", "available": true, "price": "19.98", "opts": {"Size": "12\" x 12\"", "Paper": "Matte"}}], "colorImg": {}, "scenesByColor": {}};const SF={d:'famt0z-vw.myshopify.com',t:'0231e1f7d0b12a4e2e5861f23a6a82da'};const P=window.__P;
 function fbqt(ev,ex){try{if(window.fbq)fbq('track',ev,Object.assign({content_name:P.title,content_ids:[P.id],content_type:'product',value:Number(P.price)||0,currency:P.currency||'USD'},ex||{}));}catch(e){}}
 fbqt('ViewContent');
 const main=document.getElementById('mainImg');
 const tbtns=[...document.querySelectorAll('.thumbs button')];
+tbtns.forEach(function(b){var _m=(b.dataset.src||'').match(/-(front|lifestyle|model|folded)\.jpg$/);if(_m)b.dataset.scene=_m[1];});
 const gimgs=tbtns.map(b=>b.dataset.src);
 let gi=0;
 function gshow(i){if(!gimgs.length)return;gi=(i+gimgs.length)%gimgs.length;main.src=gimgs[gi];tbtns.forEach((b,j)=>b.classList.toggle('on',j===gi));}
@@ -351,9 +352,16 @@ if(gimgs.length<2){if(gp)gp.style.display='none';if(gn)gn.style.display='none';}
 document.addEventListener('keydown',e=>{if(/(SELECT|INPUT|TEXTAREA)/.test((document.activeElement||{}).tagName||''))return;if(e.key==='ArrowLeft')gshow(gi-1);else if(e.key==='ArrowRight')gshow(gi+1);});
 function chosen(){const o={};document.querySelectorAll('.vlabel select[data-opt]').forEach(s=>o[s.dataset.opt]=s.value);return o;}
 function resolve(){const o=chosen();return (P.variants||[]).find(v=>Object.keys(o).every(k=>v.opts[k]===o[k]))||P.variants[0];}
-// color -> image swap: picking a color shows that color's shirt
+// color -> swap EVERY gallery shot (front/lifestyle/model/folded) to that color, not just the main image
 const _colorSel=document.querySelector('.vlabel select[data-opt="Color"]');
-if(_colorSel&&P.colorImg){_colorSel.addEventListener('change',function(){const u=P.colorImg[_colorSel.value];if(u){main.src=u;tbtns.forEach(function(b){b.classList.remove('on');});}});}
+function _swapGalleryColor(color){
+  var sc=(P.scenesByColor||{})[color]||null;
+  tbtns.forEach(function(b){var s=b.dataset.scene;if(s&&sc&&sc[s]){b.dataset.src=sc[s];var im=b.querySelector('img');if(im)im.src=sc[s];}});
+  for(var i=0;i<tbtns.length;i++){gimgs[i]=tbtns[i].dataset.src;}
+  var ms=(sc&&sc.front)||(P.colorImg&&P.colorImg[color]);
+  if(ms){main.src=ms;tbtns.forEach(function(b){b.classList.remove('on');});}
+}
+if(_colorSel){_colorSel.addEventListener('change',function(){_swapGalleryColor(_colorSel.value);});}
 (function(){var sws=[].slice.call(document.querySelectorAll('.swatch'));var cname=document.querySelector('[data-color-name]');
   sws.forEach(function(sw){sw.addEventListener('click',function(){
     if(_colorSel){_colorSel.value=sw.dataset.color;_colorSel.dispatchEvent(new Event('change',{bubbles:true}));}
