@@ -241,11 +241,24 @@ body.modal-open{overflow:hidden;}
 .nm-upsell-price{font-family:var(--f-mono);font-size:11px;color:var(--fg);}
 .nm-upsell-add{width:28px;height:28px;border:1px solid var(--rule-hi);background:none;color:var(--fg);font-size:16px;line-height:1;cursor:pointer;transition:background .15s,color .15s,border-color .15s;}
 .nm-upsell-add:hover{background:var(--accent);color:#000;border-color:var(--accent);}
-.bundle-slots{display:flex;flex-direction:column;gap:9px;margin:-4px 0 16px;}
-.bundle-slot{display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-muted);}
-.bundle-slot span{white-space:nowrap;}
-.bundle-slot select{flex:1;max-width:64%;background:var(--bg-elev);border:1px solid var(--rule-hi);color:var(--fg);padding:10px 11px;font-family:var(--f-body);font-size:13px;text-transform:none;letter-spacing:0;cursor:pointer;}
-.bundle-slot select:focus{outline:none;border-color:var(--accent);}
+.bundle-slots{display:flex;flex-direction:column;gap:16px;margin:2px 0 20px;}
+.bslot-intro{font-family:var(--f-body);font-size:12.5px;color:var(--fg-muted);margin:-2px 0 0;}
+.bundle-slot{display:flex;flex-direction:column;gap:9px;}
+.bslot-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;}
+.bslot-label{color:var(--fg-faint);}
+.bslot-chosen{color:var(--accent);font-weight:600;text-transform:none;letter-spacing:.01em;font-size:11.5px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62%;}
+.bslot-strip{display:flex;gap:9px;overflow-x:auto;padding:3px 2px 10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--rule-hi) transparent;}
+.bslot-strip::-webkit-scrollbar{height:6px;}
+.bslot-strip::-webkit-scrollbar-thumb{background:var(--rule-hi);border-radius:999px;}
+.bslot-strip::-webkit-scrollbar-track{background:transparent;}
+.bslot-opt{flex:0 0 auto;width:80px;display:flex;flex-direction:column;gap:6px;background:none;border:none;padding:0;cursor:pointer;scroll-snap-align:start;-webkit-tap-highlight-color:transparent;}
+.bslot-thumb{position:relative;width:80px;height:80px;border:1.5px solid var(--rule-hi);border-radius:10px;overflow:hidden;background:var(--bg-elev);transition:border-color .15s,box-shadow .15s;}
+.bslot-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.bslot-opt:hover .bslot-thumb{border-color:var(--fg-muted);}
+.bslot-opt.on .bslot-thumb{border-color:var(--accent);box-shadow:0 0 0 2px rgba(255,107,53,.25);}
+.bslot-opt.on .bslot-thumb::after{content:"\2713";position:absolute;top:3px;right:4px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;background:var(--accent);color:#0a0a0a;font-size:11px;font-weight:800;border-radius:50%;}
+.bslot-name{font-family:var(--f-body);font-size:11px;line-height:1.25;color:var(--fg-muted);text-align:center;text-transform:none;letter-spacing:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.5em;}
+.bslot-opt.on .bslot-name{color:var(--fg);}
 </style></head><body>
 <div class="sale-ticker"><div class="tk"><span>FREE U.S. SHIPPING OVER $20</span><span>BUY 2 · SAVE 10%</span><span>BUY 3 · SAVE 15%</span><span>FREE U.S. SHIPPING OVER $20</span><span>BUY 2 · SAVE 10%</span><span>BUY 3 · SAVE 15%</span></div></div>
 <header><a class="mark" href="/">NULLMADE<sup>®</sup></a><a class="etsy" href="https://www.etsy.com/shop/NullMade" target="_blank" rel="noopener">Shop Etsy</a></header>
@@ -254,7 +267,7 @@ body.modal-open{overflow:hidden;}
  <div class="buybox">
   <div class="cat">POSTERS</div><h1>PROFESSIONALLY EXHAUSTED</h1><div class="tagline">Quietly clever, on your wall.</div>
   <ul class="bullets"><li><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg><span>Museum-grade matte paper</span></li><li><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.6 7.4H22l-6 4.6 2.3 7.4L12 17.4 5.7 21.9 8 14.5 2 9.9h7.4z"/></svg><span>Crisp archival inks</span></li><li><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c3-5 7-7 10-7s7 2 10 7c-3 5-7 7-10 7s-7-2-10-7z"/><circle cx="12" cy="12" r="3"/></svg><span>Multiple sizes</span></li><li><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h13v11H1zM14 8h4l3 3v4h-7z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="18" cy="18.5" r="1.8"/></svg><span>Ships from the US</span></li></ul>
-  <div class="bundles"><button type="button" class="bundle on" data-qty="1" data-price="19.98" data-save="0"><span class="bundle-radio"></span><span class="bundle-main"><span class="bundle-name">Single</span><span class="bundle-sub">Just the one.</span></span><span class="bundle-price">$19.98</span></button><button type="button" class="bundle" data-qty="2" data-price="35.97" data-save="10"><span class="bundle-rib">MOST POPULAR</span><span class="bundle-radio"></span><span class="bundle-main"><span class="bundle-name">Two-Pack</span><span class="bundle-sub">One to gift, one to keep.<span class="bundle-ship">+ free US shipping</span></span></span><span class="bundle-price">$20.97<s>$39.96</s><span class="bundle-save">Save 10%</span></span></button><button type="button" class="bundle" data-qty="3" data-price="50.95" data-save="15"><span class="bundle-rib">BEST VALUE</span><span class="bundle-radio"></span><span class="bundle-main"><span class="bundle-name">Three-Pack</span><span class="bundle-sub">Sorted for the whole group.<span class="bundle-ship">+ free US shipping</span></span></span><span class="bundle-price">$50.95<s>$59.94</s><span class="bundle-save">Save 15%</span></span></button></div>
+  <div class="bundles"><button type="button" class="bundle on" data-qty="1" data-price="19.98" data-save="0"><span class="bundle-radio"></span><span class="bundle-main"><span class="bundle-name">Single</span><span class="bundle-sub">Just the one.</span></span><span class="bundle-price">$19.98</span></button><button type="button" class="bundle" data-qty="2" data-price="35.97" data-save="10"><span class="bundle-rib">MOST POPULAR</span><span class="bundle-radio"></span><span class="bundle-main"><span class="bundle-name">Two-Pack</span><span class="bundle-sub">One to gift, one to keep.<span class="bundle-ship">+ free US shipping</span></span></span><span class="bundle-price">$35.97<s>$39.96</s><span class="bundle-save">Save 10%</span></span></button><button type="button" class="bundle" data-qty="3" data-price="50.95" data-save="15"><span class="bundle-rib">BEST VALUE</span><span class="bundle-radio"></span><span class="bundle-main"><span class="bundle-name">Three-Pack</span><span class="bundle-sub">Sorted for the whole group.<span class="bundle-ship">+ free US shipping</span></span></span><span class="bundle-price">$50.95<s>$59.94</s><span class="bundle-save">Save 15%</span></span></button></div>
   <div class="bundle-slots" id="bundleSlots" hidden></div>
   <div class="variants"><label class="vlabel">Size<select data-opt="Size"><option selected>12″ x 18″</option><option>16″ x 20″</option><option>18″ x 24″</option><option>24″ x 36″</option><option>12&quot; x 12&quot;</option><option>11″ x 14″</option></select></label><label class="vlabel">Paper<select data-opt="Paper"><option selected>Matte</option></select></label></div>
   <div class="nm-offer-line" style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.07em;color:#ff6b35;border:1px dashed #ff6b35;padding:9px 10px;margin:2px 0 12px;text-align:center;text-transform:uppercase;">✦ Launch offer — 15% off your first order, <b style="font-weight:700">applied automatically</b></div>
@@ -329,9 +342,10 @@ btn.onclick=async()=>{const v=resolve();if(!v){note.textContent='Select your opt
  btn.disabled=true;btn.textContent='Adding…';fbqt('AddToCart',{value:Number(bundle.price)||0});
  try{
   const want=chosen();const lineMap={};const addV=function(id){lineMap[id]=(lineMap[id]||0)+1;};addV(v.id);
-  if(bundle.qty>1){[].slice.call(document.querySelectorAll('#bundleSlots select')).slice(0,bundle.qty-1).forEach(function(sel){
-    if(!sel.value||sel.value==='__same'){addV(v.id);return;}
-    const pr=allProducts.find(function(x){return x.handle===sel.value;});if(!pr){addV(v.id);return;}
+  if(bundle.qty>1){[].slice.call(document.querySelectorAll('#bundleSlots .bundle-slot')).slice(0,bundle.qty-1).forEach(function(sel){
+    var _val=sel.dataset.selected;
+    if(!_val||_val==='__same'){addV(v.id);return;}
+    const pr=allProducts.find(function(x){return x.handle===_val;});if(!pr){addV(v.id);return;}
     const mv=(pr.variants||[]).find(function(x){return x.available&&x.opts&&x.opts.Color===want.Color&&x.opts.Size===want.Size;})||(pr.variants||[]).find(function(x){return x.available&&x.opts&&x.opts.Size===want.Size;})||(pr.variants||[]).find(function(x){return x.available;})||(pr.variants||[])[0];
     addV(mv&&mv.id?mv.id:v.id);});}
   const lines=Object.keys(lineMap).map(function(id){return {merchandiseId:id,quantity:lineMap[id]};});
@@ -376,9 +390,36 @@ function renderSlots(){
   if(n===0){box.hidden=true;box.innerHTML='';return;}
   if(!allProducts.length){box.hidden=true;return;}
   box.hidden=false;
-  const opts='<option value="__same">Same design &mdash; '+esc(cleanTitle(P.title))+'</option>'+allProducts.filter(function(p){return p.handle!==P.handle;}).map(function(p){return '<option value="'+esc(p.handle)+'">'+esc(cleanTitle(p.title))+'</option>';}).join('');
-  let html='';for(var i=2;i<=n+1;i++){html+='<label class="bundle-slot"><span>Design '+i+'</span><select data-slot="'+i+'">'+opts+'</select></label>';}
+  const me=allProducts.find(function(p){return p.handle===P.handle;})||{};
+  const myImg=me.image||(typeof gimgs!=='undefined'&&gimgs[0])||'';
+  const myCat=me.category;
+  const pool=allProducts.filter(function(p){return p.handle!==P.handle&&(!myCat||p.category===myCat)&&(p.variants||[]).some(function(x){return x.available;});});
+  function card(val,img,name,sel){
+    return '<button type="button" class="bslot-opt'+(sel?' on':'')+'" data-val="'+esc(val)+'" title="'+esc(name)+'">'
+      +'<span class="bslot-thumb"><img src="'+esc(img||'')+'" alt="'+esc(name)+'" loading="lazy"></span>'
+      +'<span class="bslot-name">'+esc(name)+'</span></button>';
+  }
+  const cards=card('__same',myImg,'Same design',true)+pool.map(function(p){return card(p.handle,p.image,cleanTitle(p.title),false);}).join('');
+  let html='<div class="bslot-intro">Mix &amp; match — tap a shirt to swap in a different design.</div>';
+  for(var i=2;i<=n+1;i++){
+    var ord=i===2?'2nd':i===3?'3rd':i+'th';
+    html+='<div class="bundle-slot" data-slot="'+i+'" data-selected="__same">'
+      +'<div class="bslot-head"><span class="bslot-label">Your '+ord+' shirt</span>'
+      +'<span class="bslot-chosen">Same design</span></div>'
+      +'<div class="bslot-strip">'+cards+'</div></div>';
+  }
   box.innerHTML=html;
+  [].slice.call(box.querySelectorAll('.bundle-slot')).forEach(function(slot){
+    [].slice.call(slot.querySelectorAll('.bslot-opt')).forEach(function(opt){
+      opt.addEventListener('click',function(){
+        slot.querySelectorAll('.bslot-opt').forEach(function(o){o.classList.remove('on');});
+        opt.classList.add('on');
+        slot.dataset.selected=opt.dataset.val;
+        var ch=slot.querySelector('.bslot-chosen');
+        if(ch)ch.textContent=opt.dataset.val==='__same'?'Same design':((opt.querySelector('.bslot-name')||{}).textContent||'');
+      });
+    });
+  });
 }
 async function removeLine(lineId){
   if(!shopifyCart)return;
