@@ -380,7 +380,11 @@ btn.onclick=async()=>{const v=resolve();if(!v){note.textContent='Select your opt
   const want=chosen();const lineMap={};const addV=function(id){lineMap[id]=(lineMap[id]||0)+1;};addV(v.id);
   if(bundle.qty>1){[].slice.call(document.querySelectorAll('#bundleSlots .bundle-slot')).slice(0,bundle.qty-1).forEach(function(sel){
     var _val=sel.dataset.selected;
-    if(!_val||_val==='__same'){addV(v.id);return;}
+    if(!_val||_val==='__same'){
+      var _sc=sel.dataset.color||want.Color, _ss=sel.dataset.size||want.Size, _pv=(P.variants||[]);
+      var _sv=_pv.find(function(x){return x.opts&&x.opts.Color===_sc&&x.opts.Size===_ss&&x.available!==false;})||_pv.find(function(x){return x.opts&&x.opts.Color===_sc&&x.opts.Size===_ss;})||v;
+      addV(_sv&&_sv.id?_sv.id:v.id);return;
+    }
     const pr=allProducts.find(function(x){return x.handle===_val;});if(!pr){addV(v.id);return;}
     var _col=sel.dataset.color||want.Color, _siz=sel.dataset.size||want.Size;
     const mv=(pr.variants||[]).find(function(x){return x.available&&x.opts&&x.opts.Color===_col&&x.opts.Size===_siz;})||(pr.variants||[]).find(function(x){return x.available&&x.opts&&x.opts.Size===_siz;})||(pr.variants||[]).find(function(x){return x.available;})||(pr.variants||[])[0];
@@ -449,7 +453,6 @@ function renderSlots(){
   [].slice.call(box.querySelectorAll('.bundle-slot')).forEach(function(slot){
     [].slice.call(slot.querySelectorAll('.bslot-opt')).forEach(function(opt){
       opt.addEventListener('click',function(){
-        if(opt.dataset.val==='__same'){selectSlotDesign(slot,opt,'__same',null,null,'Same design');return;}
         openBslotModal(slot,opt,opt.dataset.val);
       });
     });
@@ -463,13 +466,16 @@ function selectSlotDesign(slot,optEl,val,color,size,name){
   if(color)slot.dataset.color=color;else slot.removeAttribute('data-color');
   if(size)slot.dataset.size=size;else slot.removeAttribute('data-size');
   var ch=slot.querySelector('.bslot-chosen');
-  if(ch)ch.textContent=(val==='__same')?'Same design':(name+(color?(' · '+color):'')+(size?(' · '+size):''));
+  var _bn=(val==='__same')?'Same design':(name||'');
+  if(ch)ch.textContent=_bn+(color?(' · '+color):'')+(size?(' · '+size):'');
 }
 // Tap a design -> popup with the enlarged mockup + its own color & size selectors.
 function openBslotModal(slot,optEl,handle){
-  var pr=allProducts.find(function(p){return p.handle===handle;});if(!pr)return;
+  var isSame=(handle==='__same');
+  var pr=isSame?(allProducts.find(function(p){return p.handle===P.handle;})||{handle:P.handle,title:P.title,image:(typeof gimgs!=='undefined'&&gimgs[0])||'',colorImg:(P.colorImg||{}),variants:(P.variants||[])}):allProducts.find(function(p){return p.handle===handle;});
+  if(!pr)return;
   var m=document.getElementById('bslotModal');if(!m)return;
-  m._slot=slot;m._opt=optEl;m._pr=pr;
+  m._slot=slot;m._opt=optEl;m._pr=pr;m._same=isSame;
   var im=document.getElementById('bslotModalImg');if(im)im.alt=cleanTitle(pr.title);
   var nm=document.getElementById('bslotModalName');if(nm)nm.textContent=cleanTitle(pr.title);
   var colors=[],sizes=[];
@@ -485,7 +491,7 @@ function openBslotModal(slot,optEl,handle){
 function closeBslotModal(){var m=document.getElementById('bslotModal');if(m)m.hidden=true;document.body.classList.remove('modal-open');}
 (function(){
   var cf=document.getElementById('bslotModalConfirm');
-  if(cf)cf.onclick=function(){var m=document.getElementById('bslotModal');if(!m||!m._slot||!m._pr)return;var col=(document.getElementById('bslotModalColor')||{}).value||'',siz=(document.getElementById('bslotModalSize')||{}).value||'';selectSlotDesign(m._slot,m._opt,m._pr.handle,col,siz,cleanTitle(m._pr.title));closeBslotModal();};
+  if(cf)cf.onclick=function(){var m=document.getElementById('bslotModal');if(!m||!m._slot||!m._pr)return;var col=(document.getElementById('bslotModalColor')||{}).value||'',siz=(document.getElementById('bslotModalSize')||{}).value||'';if(m._same){selectSlotDesign(m._slot,m._opt,'__same',col,siz,'Same design');}else{selectSlotDesign(m._slot,m._opt,m._pr.handle,col,siz,cleanTitle(m._pr.title));}closeBslotModal();};
   [].slice.call(document.querySelectorAll('[data-bslot-close]')).forEach(function(el){el.addEventListener('click',closeBslotModal);});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeBslotModal();});
 })();
