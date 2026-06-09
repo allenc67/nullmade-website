@@ -2076,6 +2076,7 @@ fillTicker('saleTicker', SALE_TICKER);
 // Premium model hero shots (Patua One varsity, Seedream models) keyed by handle.
 // Used as the primary listing image for tees; hosted in /heroes/.
 const PRODUCT_HEROES = new Set([
+  "eeffoc-coffee-spelled-backwards-funny-coffee-tee-nullmade",
   // new NOT-X-JUST-Y products (model heroes added 2026-06)
   "not-lazy-just-energy-efficient-funny-tee-nullmade",
   "not-grumpy-just-pre-coffee-funny-tee-nullmade",
@@ -2635,7 +2636,7 @@ function openModal(p){
   const vurl = '';   // product videos removed — they were just zoom clips
   let photos = (Array.isArray(p.images) && p.images.length) ? [...new Set(p.images)] : [p.image].filter(Boolean);
   // Tees: model hero + accurate Printify Natural-variant mockups (real cream garment + navy print) + fabric detail.
-  if (typeof PRODUCT_HEROES !== 'undefined' && p.handle && PRODUCT_HEROES.has(p.handle)) photos = [p.image, '/mockups/' + p.handle + '-front.jpg', '/mockups/' + p.handle + '-front2.jpg', '/details/fabric.jpg'];
+  if (typeof PRODUCT_HEROES !== 'undefined' && p.handle && PRODUCT_HEROES.has(p.handle)) photos = [p.image, '/mockups/' + p.handle + '-front.jpg', '/mockups/' + p.handle + '-lifestyle.jpg', '/mockups/' + p.handle + '-folded.jpg', '/details/fabric.jpg'];
   const MAXG = 6;
   if (photos.length > MAXG){
     const step = photos.length / MAXG;
